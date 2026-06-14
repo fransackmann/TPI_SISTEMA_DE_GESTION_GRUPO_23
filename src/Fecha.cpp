@@ -1,7 +1,7 @@
 #include <iostream>
+using namespace std;
 #include "Fecha.h"
 
-using namespace std;
 
 Fecha::Fecha(){
 
@@ -10,7 +10,6 @@ Fecha::Fecha(){
     _anio = 2026;
 
 }
-
 int Fecha::getDia(){
 
     return _dia;
@@ -81,4 +80,15 @@ void Fecha::mostrar(){
 
     cout << _dia << "/" << _mes << "/" << _anio;
 
+}
+void Fecha::cargar(int dia ,int mes ,int anio){
+    _dia = dia;
+    _mes = mes;
+    _anio = anio;
+
+}
+void Fecha::operator=(Fecha aux){
+_dia = aux._dia;
+_mes = aux._mes;
+_anio = aux._anio;
 }
