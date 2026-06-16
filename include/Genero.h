@@ -22,7 +22,11 @@ public:
     bool getEstado();
     void setEstado(bool estado);
 
+
     void cargar();
     void mostrar();
+    void mostrarGenerosAlfabeticamente();
+
+    void menuGeneros();
 
 };

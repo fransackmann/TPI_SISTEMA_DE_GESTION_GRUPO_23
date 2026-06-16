@@ -43,3 +43,44 @@
 1781377333 c:\users\user\desktop\tpi_sistema_de_gestion_grupo_23-main\include\cuotas.h
 	"Fecha.h"
 
+1781577835 source:c:\users\usuario\downloads\tpi_sistema_de_gestion_grupo_23-main\main.cpp
+	<iostream>
+	"Autor.h"
+	"Fecha.h"
+	"Genero.h"
+
+1781577709 c:\users\usuario\downloads\tpi_sistema_de_gestion_grupo_23-main\include\autor.h
+
+1781568611 c:\users\usuario\downloads\tpi_sistema_de_gestion_grupo_23-main\include\fecha.h
+
+1781568611 source:c:\users\usuario\downloads\tpi_sistema_de_gestion_grupo_23-main\src\cuotas.cpp
+	<iostream>
+	"Cuotas.h"
+
+1781568611 c:\users\usuario\downloads\tpi_sistema_de_gestion_grupo_23-main\include\cuotas.h
+	"Fecha.h"
+
+1781568611 source:c:\users\usuario\downloads\tpi_sistema_de_gestion_grupo_23-main\src\fecha.cpp
+	<iostream>
+	"Fecha.h"
+
+1781578583 source:c:\users\usuario\downloads\tpi_sistema_de_gestion_grupo_23-main\src\genero.cpp
+	<iostream>
+	<cstring>
+	"Genero.h"
+
+1781577720 c:\users\usuario\downloads\tpi_sistema_de_gestion_grupo_23-main\include\genero.h
+
+1781568611 source:c:\users\usuario\downloads\tpi_sistema_de_gestion_grupo_23-main\src\socio.cpp
+	<iostream>
+	<cstring>
+	"Socio.h"
+
+1781568611 c:\users\usuario\downloads\tpi_sistema_de_gestion_grupo_23-main\include\socio.h
+	"Fecha.h"
+
+1781577201 source:c:\users\usuario\downloads\tpi_sistema_de_gestion_grupo_23-main\src\autor.cpp
+	<iostream>
+	<cstring>
+	"Autor.h"
+
