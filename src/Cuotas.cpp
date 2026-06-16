@@ -1,142 +1,195 @@
 #include <iostream>
-#include <cstring>
-using namespace std;
 #include "Cuotas.h"
-#include "Fecha.h"
 
-Cuotas::Cuotas()
-{
-    _idCuota=0;
+using namespace std;
+
+Cuotas::Cuotas(){
+
+    _idCuota = 0;
     _idSocio = 0;
-    _mes = Fecha();
-    _anio = Fecha();
-    _fechacobro = Fecha();
+    _mes = 1;
+    _anio = 2026;
+    _fechaCobro = Fecha();
     _importe = 0.0;
-    _pagada = 0;
-    _estado= 1;
+    _pagada = false;
+    _estado = true;
 
 }
 
+Cuotas::Cuotas(int idCuota, int idSocio, int mes, int anio, Fecha fechaCobro, float importe, bool pagada, bool estado){
 
-Cuotas::Cuotas(int idCuota,int idSocio,Fecha mes,Fecha anio,Fecha fechaCobro,float importe,bool pagada,bool estado)
-{
     _idCuota = idCuota;
     _idSocio = idSocio;
     _mes = mes;
     _anio = anio;
-    _fechacobro = fechaCobro;
+    _fechaCobro = fechaCobro;
     _importe = importe;
     _pagada = pagada;
     _estado = estado;
+
 }
 
-int Cuotas::getidcuota()
-{
+int Cuotas::getIdCuota(){
+
     return _idCuota;
+
 }
-void Cuotas::setidcouta(int idCuota)
-{
+
+void Cuotas::setIdCuota(int idCuota){
+
     _idCuota = idCuota;
+
 }
 
-int Cuotas::getidsocio()
-{
+int Cuotas::getIdSocio(){
+
     return _idSocio;
+
 }
-void Cuotas::setidsocio(int idSocio)
-{
+
+void Cuotas::setIdSocio(int idSocio){
+
     _idSocio = idSocio;
+
 }
 
-Fecha Cuotas::getmes()
-{
+int Cuotas::getMes(){
+
     return _mes;
-}
-void Cuotas::setmes(Fecha mes)
-{
-    _mes = mes;
+
 }
 
-Fecha Cuotas::getanio()
-{
+void Cuotas::setMes(int mes){
+
+    if(mes >= 1 && mes <= 12){
+        _mes = mes;
+    }
+
+}
+
+int Cuotas::getAnio(){
+
     return _anio;
-}
-void Cuotas::setanio(Fecha anio)
-{
-    _anio = anio;
+
 }
 
-Fecha Cuotas::getfechacobro()
-{
-    return _fechacobro;
-}
-void Cuotas::setfechacobro(Fecha fechacobro)
-{
-    _fechacobro = fechacobro;
+void Cuotas::setAnio(int anio){
+
+    if(anio > 0){
+        _anio = anio;
+    }
+
 }
 
-float Cuotas::getimporte()
-{
+Fecha Cuotas::getFechaCobro(){
+
+    return _fechaCobro;
+
+}
+
+void Cuotas::setFechaCobro(Fecha fechaCobro){
+
+    _fechaCobro = fechaCobro;
+
+}
+
+float Cuotas::getImporte(){
+
     return _importe;
-}
-void Cuotas::setimporte(float importe)
-{
-    _importe = importe;
+
 }
 
-bool Cuotas::getpagada()
-{
+void Cuotas::setImporte(float importe){
+
+    if(importe >= 0){
+        _importe = importe;
+    }
+
+}
+
+bool Cuotas::getPagada(){
+
     return _pagada;
-}
-void Cuotas::setpagada(bool pagada)
-{
-    _pagada = pagada;
+
 }
 
-bool Cuotas::getestado()
-{
-   return _estado;
+void Cuotas::setPagada(bool pagada){
+
+    _pagada = pagada;
+
 }
-void Cuotas::setestado(bool estado)
-{
+
+bool Cuotas::getEstado(){
+
+    return _estado;
+
+}
+
+void Cuotas::setEstado(bool estado){
+
     _estado = estado;
+
 }
 
 void Cuotas::cargar(){
-    cout << "Id de cuota: " << endl;
-    cin >> _idCuota;
-    cout << "Id de socio: " << endl;
-    cin >> _idSocio;
-    int dia=0,mes=0,anio=0;
-    cout << "mes: " << endl;
-    cin >> mes;
-    _mes.cargar(dia,mes,anio);
-    cout << "anio: " << endl;
-    cin >> anio;
-    _anio.cargar(dia,dia,anio);
-    cout << "fecha de cobro: " << endl;
-    cin >> dia,mes,anio;
-    _fechacobro.cargar(dia,mes,anio);
-    cout << "importe: " << endl;
-    cin >> _importe;
-    cout << "pagada: " << endl;
-    cin >> _pagada;
-    cout << "estado: " << endl;
-    cin >> _estado;
-}
-void Cuotas::mostrar(){
-    cout << "Id de cuota " << _idCuota << endl;
-    cout << "Id de socio " << _idSocio << endl;
-    cout << "mes ";
-    _mes.mostrar();
-    cout << "anio ";
-    _anio.mostrar();
-    cout << "fecha de cobro ";
-    _fechacobro.mostrar();
-    cout << "importe " << _importe << endl;
-    cout << "pagada " << _pagada << endl;
-    cout << "estado " << _estado << endl;
-    cout << "______________________ " << endl;
 
+    int mes, anio;
+    float importe;
+    int pagada;
+
+    cout << "ID de cuota: ";
+    cin >> _idCuota;
+
+    cout << "ID de socio: ";
+    cin >> _idSocio;
+
+    cout << "Mes: ";
+    cin >> mes;
+    setMes(mes);
+
+    cout << "Anio: ";
+    cin >> anio;
+    setAnio(anio);
+
+    cout << "Fecha de cobro: " << endl;
+    _fechaCobro.cargar();
+
+    cout << "Importe: ";
+    cin >> importe;
+    setImporte(importe);
+
+    cout << "Pagada? 1-Si / 0-No: ";
+    cin >> pagada;
+    _pagada = pagada;
+
+    _estado = true;
+
+}
+
+void Cuotas::mostrar(){
+
+    if(_estado == true){
+
+        cout << "ID de cuota: " << _idCuota << endl;
+        cout << "ID de socio: " << _idSocio << endl;
+        cout << "Mes: " << _mes << endl;
+        cout << "Anio: " << _anio << endl;
+
+        cout << "Fecha de cobro: ";
+        _fechaCobro.mostrar();
+        cout << endl;
+
+        cout << "Importe: " << _importe << endl;
+
+        if(_pagada){
+            cout << "Pagada: Si" << endl;
+        }
+        else{
+            cout << "Pagada: No" << endl;
+        }
+
+        cout << "Estado: Activo" << endl;
+        cout << "-----------------------------" << endl;
+    }
 
 }
