@@ -1,56 +1,48 @@
 #pragma once
 #include "Fecha.h"
 
-
 class Cuotas{
 
 private:
 
     int _idCuota;
     int _idSocio;
-    Fecha _mes;
-    Fecha _anio;
-    Fecha _fechacobro;
+    int _mes;
+    int _anio;
+    Fecha _fechaCobro;
     float _importe;
     bool _pagada;
     bool _estado;
 
 public:
+
     Cuotas();
-    Cuotas(int idCuota,
-        int idSocio,
-        Fecha mes,
-        Fecha anio,
-        Fecha fechaCobro,
-        float importe,
-        bool pagada,
-        bool estado);
+    Cuotas(int idCuota, int idSocio, int mes, int anio, Fecha fechaCobro, float importe, bool pagada, bool estado);
 
-    int getidcuota();
-    void setidcouta(int idCuota);
+    int getIdCuota();
+    void setIdCuota(int idCuota);
 
-    int getidsocio();
-    void setidsocio(int idSocio);
+    int getIdSocio();
+    void setIdSocio(int idSocio);
 
-    Fecha getmes();
-    void setmes(Fecha mes);
+    int getMes();
+    void setMes(int mes);
 
-    Fecha getanio();
-    void setanio(Fecha anio);
+    int getAnio();
+    void setAnio(int anio);
 
-    Fecha getfechacobro();
-    void setfechacobro(Fecha fechacobro);
+    Fecha getFechaCobro();
+    void setFechaCobro(Fecha fechaCobro);
 
-    float getimporte();
-    void setimporte(float importe);
+    float getImporte();
+    void setImporte(float importe);
 
-    bool getpagada();
-    void setpagada(bool pagada);
+    bool getPagada();
+    void setPagada(bool pagada);
 
-    bool getestado();
-    void setestado(bool estado);
+    bool getEstado();
+    void setEstado(bool estado);
 
     void cargar();
     void mostrar();
 };
-
