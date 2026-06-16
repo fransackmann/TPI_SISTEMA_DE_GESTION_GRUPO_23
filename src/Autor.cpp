@@ -132,7 +132,7 @@ void Autor::mostrarAutoresOrdenadosPorApellido(){
             cout << "Apellido: " << autores[i].getApellido() << endl;
             cout << "Nombre: " << autores[i].getNombre() << endl;
             cout << "ID: " << autores[i].getAutorID() << endl;
-            cout << "Nacionalidad: " << _nacionalidad << endl;
+            cout << "Nacionalidad: " << autores[i].getNacionalidad() << endl;
             cout << "-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-" << endl;
 
 
