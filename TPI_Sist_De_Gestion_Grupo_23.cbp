@@ -39,12 +39,14 @@
 		<Unit filename="include/Cuotas.h" />
 		<Unit filename="include/Fecha.h" />
 		<Unit filename="include/Genero.h" />
+		<Unit filename="include/Pagos.h" />
 		<Unit filename="include/Socio.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="src/Autor.cpp" />
 		<Unit filename="src/Cuotas.cpp" />
 		<Unit filename="src/Fecha.cpp" />
 		<Unit filename="src/Genero.cpp" />
+		<Unit filename="src/Pagos.cpp" />
 		<Unit filename="src/Socio.cpp" />
 		<Extensions />
 	</Project>
