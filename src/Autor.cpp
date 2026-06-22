@@ -1,5 +1,7 @@
 #include <iostream>
 #include <cstring>
+#include <cstdio>
+#include <cstdlib>
 #include "Autor.h"
 
 using namespace std;
@@ -11,164 +13,193 @@ Autor::Autor(){
     strcpy(_nacionalidad, "");
     _estado = true;
 }
-Autor::Autor(int ID,const char nombre[30],const char apellido[30],const char nacionalidad[30],bool estado){
-    _idAutor = ID;
-    strcpy(_nombre, nombre);
-    strcpy(_apellido, apellido);
-    strcpy(_nacionalidad, nacionalidad);
-    _estado = estado;
-}
-int Autor::getAutorID(){
-    return _idAutor;
-}
-const char* Autor::getNombre(){
-    return _nombre;
-}
-const char* Autor::getApellido(){
-    return _apellido;
-}
-const char* Autor::getNacionalidad(){
-    return _nacionalidad;
-}
-bool Autor::getEstado(){
-    return _estado;
-}
-void Autor::setAutorID(int ID){
-    _idAutor = ID;
-}
-void Autor::setNombre(const char nombre[30]){
-    strcpy(_nombre, nombre);
-}
-void Autor::setApellido(const char apellido[30]){
-    strcpy(_apellido, apellido);
-}
-void Autor::setNacionalidad(const char nacionalidad[30]){
-    strcpy(_nacionalidad, nacionalidad);
-}
-void Autor::setEstado(bool estado){
-    _estado = estado;
-}
-void Autor::cargar(){
-    system("cls");
-    FILE* pAutor = fopen("Autores.dat", "ab");
-    if(pAutor==NULL){
-        cout << "No archivo" << endl;
-        return;
-    }
-    cout << "ID Del Autor: ";
-    cin >> _idAutor;
-    cout << endl;
 
+Autor::Autor(int idAutor, const char* nombre, const char* apellido, const char* nacionalidad, bool estado){
+    _idAutor = idAutor;
+    strcpy(_nombre, nombre);
+    strcpy(_apellido, apellido);
+    strcpy(_nacionalidad, nacionalidad);
+    _estado = estado;
+}
+
+int Autor::getAutorID(){ return _idAutor; }
+void Autor::setAutorID(int idAutor){ _idAutor = idAutor; }
+
+const char* Autor::getNombre(){ return _nombre; }
+void Autor::setNombre(const char* nombre){ strcpy(_nombre, nombre); }
+
+const char* Autor::getApellido(){ return _apellido; }
+void Autor::setApellido(const char* apellido){ strcpy(_apellido, apellido); }
+
+const char* Autor::getNacionalidad(){ return _nacionalidad; }
+void Autor::setNacionalidad(const char* nacionalidad){ strcpy(_nacionalidad, nacionalidad); }
+
+bool Autor::getEstado(){ return _estado; }
+void Autor::setEstado(bool estado){ _estado = estado; }
+
+void Autor::cargar(){
     cout << "Nombre: ";
     cin >> _nombre;
-    cout << endl;
 
     cout << "Apellido: ";
     cin >> _apellido;
-    cout << endl;
 
     cout << "Nacionalidad: ";
     cin >> _nacionalidad;
-    cout << endl;
 
     _estado = true;
-
-    fwrite(this, sizeof(Autor), 1, pAutor);
-    fclose(pAutor);
-
-    cout << "Autor Agregado!!" << endl;
-    system("pause");
 }
+
 void Autor::mostrar(){
-    system("cls");
-    FILE* pAutor = fopen("Autores.dat", "rb");
-    if(pAutor==NULL){
-        cout << "No archivo" << endl;
-
-        return;
+    if(_estado){
+        cout << "ID: " << _idAutor << endl;
+        cout << "Nombre: " << _nombre << endl;
+        cout << "Apellido: " << _apellido << endl;
+        cout << "Nacionalidad: " << _nacionalidad << endl;
+        cout << "-----------------------------" << endl;
     }
+}
+
+bool Autor::guardar(){
+    FILE* pArchivo = fopen("Autores.dat", "ab");
+    if(pArchivo == NULL){
+        return false;
+    }
+
+    bool ok = fwrite(this, sizeof(Autor), 1, pArchivo);
+    fclose(pArchivo);
+    return ok;
+}
+
+int Autor::contarRegistros(){
+    FILE* pArchivo = fopen("Autores.dat", "rb");
+    if(pArchivo == NULL){
+        return 0;
+    }
+
+    fseek(pArchivo, 0, SEEK_END);
+    int cantidad = ftell(pArchivo) / sizeof(Autor);
+    fclose(pArchivo);
+
+    return cantidad;
+}
+
+Autor Autor::leer(int posicion){
     Autor autor;
-    while(fread(&autor, sizeof(Autor), 1, pAutor)==1){
-        if(autor._estado==true){
-            cout << "ID: " << autor._idAutor << endl;
-            cout << "Nombre: " << autor._nombre << endl;
-            cout << "Apellido: " << autor._apellido << endl;
-            cout << "Nacionalidad: " << autor._nacionalidad << endl;
-            cout << "-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-" << endl;
 
+    FILE* pArchivo = fopen("Autores.dat", "rb");
+    if(pArchivo == NULL){
+        return autor;
+    }
 
+    fseek(pArchivo, posicion * sizeof(Autor), SEEK_SET);
+    fread(&autor, sizeof(Autor), 1, pArchivo);
+    fclose(pArchivo);
+
+    return autor;
+}
+
+int Autor::generarNuevoID(){
+    int cantidad = contarRegistros();
+    int maximo = 0;
+
+    for(int i = 0; i < cantidad; i++){
+        Autor autor = leer(i);
+        if(autor.getAutorID() > maximo){
+            maximo = autor.getAutorID();
         }
     }
-    fclose(pAutor);
+
+    return maximo + 1;
+}
+
+void Autor::listar(){
+    system("cls");
+
+    int cantidad = contarRegistros();
+
+    for(int i = 0; i < cantidad; i++){
+        Autor autor = leer(i);
+        autor.mostrar();
+    }
+
     system("pause");
 }
-void Autor::mostrarAutoresOrdenadosPorApellido(){
-    system("cls");
-    FILE* pAutor = fopen("Autores.dat", "rb");
-    if(pAutor==NULL){
-        cout << "No archivo" << endl;
 
+void Autor::listarOrdenadoPorApellido(){
+    system("cls");
+
+    int cantidad = contarRegistros();
+
+    if(cantidad == 0){
+        cout << "No hay autores cargados." << endl;
+        system("pause");
         return;
     }
-    fseek(pAutor, 0, SEEK_END);
-    int cantidadAutores = ftell(pAutor)/sizeof(Autor);
 
-    Autor* autores = new Autor[cantidadAutores];
-    rewind(pAutor);
-    fread(autores, sizeof(Autor), cantidadAutores, pAutor);
-    fclose(pAutor);
+    Autor* autores = new Autor[cantidad];
 
-    for(int i = 0; i < cantidadAutores-1; i++){
-        for (int x = 0; x < cantidadAutores-1-i; x++){
-            if(strcmp(autores[x].getApellido(),autores[x+1].getApellido())>0){
-                Autor temp = autores[x];
-                autores[x] = autores[x+1];
-                autores[x+1] = temp;
+    for(int i = 0; i < cantidad; i++){
+        autores[i] = leer(i);
+    }
+
+    for(int i = 0; i < cantidad - 1; i++){
+        for(int j = 0; j < cantidad - 1 - i; j++){
+            if(strcmp(autores[j].getApellido(), autores[j + 1].getApellido()) > 0){
+                Autor aux = autores[j];
+                autores[j] = autores[j + 1];
+                autores[j + 1] = aux;
             }
         }
     }
-    for(int i= 0; i < cantidadAutores; i++){
-        if(autores[i].getEstado() == true){
-            cout << "Apellido: " << autores[i].getApellido() << endl;
-            cout << "Nombre: " << autores[i].getNombre() << endl;
-            cout << "ID: " << autores[i].getAutorID() << endl;
-            cout << "Nacionalidad: " << autores[i].getNacionalidad() << endl;
-            cout << "-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-" << endl;
 
-
-        }
+    for(int i = 0; i < cantidad; i++){
+        autores[i].mostrar();
     }
+
     delete[] autores;
     system("pause");
 }
+
 void Autor::menuAutores(){
-    int rta;
+    int opcion;
+
     while(true){
         system("cls");
-        cout << "Menu Autores" << endl;
-        cout << "-.-.-.-.-.-.-.-.-.-" << endl;
-        cout << "1- Cargar Autores" << endl;
-        cout << "2- Mostrar Autores" << endl;
-        cout << "3- Mostrar Autores por Apellido" << endl;
-        cout << endl;
-        cout << "0- Volver..." << endl;
-        cin >> rta;
-        switch(rta){
-        case 1:
-            Autor::cargar();
+        cout << "MENU AUTORES" << endl;
+        cout << "1- Cargar autor" << endl;
+        cout << "2- Listar autores" << endl;
+        cout << "3- Listar autores ordenados por apellido" << endl;
+        cout << "0- Volver" << endl;
+        cin >> opcion;
+
+        switch(opcion){
+        case 1:{
+            Autor autor;
+            autor.setAutorID(generarNuevoID());
+            autor.cargar();
+
+            if(autor.guardar()){
+                cout << "Autor guardado correctamente." << endl;
+            }
+            else{
+                cout << "Error al guardar autor." << endl;
+            }
+
+            system("pause");
             break;
+        }
+
         case 2:
-            Autor::mostrar();
+            listar();
             break;
+
         case 3:
-            Autor::mostrarAutoresOrdenadosPorApellido();
+            listarOrdenadoPorApellido();
             break;
+
         case 0:
-           return;
-           break;
+            return;
         }
     }
-    cout<<endl;
-    system("pause");
-
 }

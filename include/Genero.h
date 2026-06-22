@@ -3,13 +3,11 @@
 class Genero{
 
 private:
-
     int _idGenero;
     char _descripcion[30];
     bool _estado;
 
 public:
-
     Genero();
     Genero(int idGenero, const char* descripcion, bool estado);
 
@@ -22,11 +20,14 @@ public:
     bool getEstado();
     void setEstado(bool estado);
 
-
     void cargar();
     void mostrar();
-    void mostrarGenerosAlfabeticamente();
 
-    void menuGeneros();
-
+    bool guardar();
+    static int contarRegistros();
+    static Genero leer(int posicion);
+    static int generarNuevoID();
+    static void listar();
+    static void listarOrdenadoAlfabeticamente();
+    static void menuGeneros();
 };

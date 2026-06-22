@@ -4,7 +4,6 @@
 class Prestamo{
 
 private:
-
     int _idPrestamo;
     int _idSocio;
     int _idLibro;
@@ -16,7 +15,6 @@ private:
     bool _estado;
 
 public:
-
     Prestamo();
     Prestamo(int idPrestamo, int idSocio, int idLibro, Fecha fechaPrestamo, Fecha fechaVencimiento, Fecha fechaDevolucion, bool devuelto, bool vencido, bool estado);
 
@@ -50,4 +48,19 @@ public:
     void cargar();
     void mostrar();
 
+    bool guardar();
+    bool modificar(int posicion);
+    static int contarRegistros();
+    static Prestamo leer(int posicion);
+    static int buscarPorID(int idPrestamo);
+    static int generarNuevoID();
+    static void registrarPrestamo();
+    static void devolverPrestamo();
+    static void listar();
+    static void listarActivos();
+    static void listarVencidos();
+    static void listarOrdenadosPorFecha();
+    static void listarPorRangoFechas();
+    static void marcarPrestamoVencido();
+    static void menuPrestamos();
 };

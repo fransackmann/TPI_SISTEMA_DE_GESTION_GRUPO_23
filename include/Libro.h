@@ -4,7 +4,6 @@
 class Libro{
 
 private:
-
     int _idLibro;
     char _isbn[20];
     char _titulo[50];
@@ -17,7 +16,6 @@ private:
     bool _estado;
 
 public:
-
     Libro();
     Libro(int idLibro, const char* isbn, const char* titulo, int idAutor, int idGenero, const char* editorial, Fecha anioPublicacion, int stockTotal, int stockDisponible, bool estado);
 
@@ -51,7 +49,25 @@ public:
     bool getEstado();
     void setEstado(bool estado);
 
+    void prestarEjemplar();
+    void devolverEjemplar();
+
     void cargar();
     void mostrar();
 
+    bool guardar();
+    bool modificar(int posicion);
+    static int contarRegistros();
+    static Libro leer(int posicion);
+    static int buscarPorID(int idLibro);
+    static bool existe(int idLibro);
+    static int generarNuevoID();
+    static void listar();
+    static void listarPorAutor();
+    static void listarPorGenero();
+    static void consultarPorTitulo();
+    static void consultarPorISBN();
+    static void bajaLogica();
+    static void modificarLibro();
+    static void menuLibros();
 };

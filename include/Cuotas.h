@@ -4,7 +4,6 @@
 class Cuotas{
 
 private:
-
     int _idCuota;
     int _idSocio;
     int _mes;
@@ -15,7 +14,6 @@ private:
     bool _estado;
 
 public:
-
     Cuotas();
     Cuotas(int idCuota, int idSocio, int mes, int anio, Fecha fechaCobro, float importe, bool pagada, bool estado);
 
@@ -43,6 +41,18 @@ public:
     bool getEstado();
     void setEstado(bool estado);
 
+    void marcarPagada();
+
     void cargar();
     void mostrar();
+
+    bool guardar();
+    bool modificar(int posicion);
+    static int contarRegistros();
+    static Cuotas leer(int posicion);
+    static int buscarPorID(int idCuota);
+    static int generarNuevoID();
+    static void listar();
+    static void listarPendientesPorSocio();
+    static void menuCuotas();
 };

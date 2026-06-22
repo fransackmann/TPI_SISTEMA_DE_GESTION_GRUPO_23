@@ -1,39 +1,48 @@
 #pragma once
 #include "Fecha.h"
+
 class Pagos{
 
 private:
-
-int _idPago;
-int _idSocio;
-int  _idCuota;
-Fecha _fechaPago;
-float _importe;
-bool _estado;
+    int _idPago;
+    int _idSocio;
+    int _idCuota;
+    Fecha _fechaPago;
+    float _importe;
+    bool _estado;
 
 public:
-
     Pagos();
-    Pagos(int idpago,int idsocio,int idcuota,Fecha fechapago,float importe, bool estado);
+    Pagos(int idPago, int idSocio, int idCuota, Fecha fechaPago, float importe, bool estado);
 
-    int getidpago();
-    void setidpago(int idPago);
+    int getIdPago();
+    void setIdPago(int idPago);
 
-    int getidsocio();
-    void setidsocio(int idsocio);
+    int getIdSocio();
+    void setIdSocio(int idSocio);
 
-    int getidcuota();
-    void setidcuota(int idcuota);
+    int getIdCuota();
+    void setIdCuota(int idCuota);
 
-    Fecha getfechapago();
-    void setfechapago(Fecha fechapago);
+    Fecha getFechaPago();
+    void setFechaPago(Fecha fechaPago);
 
-    float getimporte();
-    void setimporte(float importe);
+    float getImporte();
+    void setImporte(float importe);
 
-    bool getestado();
-    void setestado(bool estado);
+    bool getEstado();
+    void setEstado(bool estado);
 
     void cargar();
     void mostrar();
+
+    bool guardar();
+    static int contarRegistros();
+    static Pagos leer(int posicion);
+    static int generarNuevoID();
+    static void registrarPago();
+    static void listar();
+    static void listarPorSocio();
+    static void pagosPorMes();
+    static void menuPagos();
 };
