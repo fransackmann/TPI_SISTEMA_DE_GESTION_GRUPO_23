@@ -43,8 +43,7 @@ public:
 
     void marcarPagada();
 
-    void cargar();
-    void mostrar();
+    void mostrar(int fila);
 
     bool guardar();
     bool modificar(int posicion);
@@ -53,6 +52,7 @@ public:
     static int buscarPorID(int idCuota);
     static int generarNuevoID();
     static void listar();
+    static void listarPagadas();
+    static void listarPendientes();
     static void listarPendientesPorSocio();
-    static void menuCuotas();
 };

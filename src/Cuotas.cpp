@@ -3,8 +3,11 @@
 #include <cstdlib>
 #include "Cuotas.h"
 #include "Socio.h"
+#include "Menus.h"
+#include "rlutil.h"
 
 using namespace std;
+using namespace rlutil;
 
 Cuotas::Cuotas(){
     _idCuota = 0;
@@ -56,48 +59,16 @@ void Cuotas::marcarPagada(){
     _pagada = true;
 }
 
-void Cuotas::cargar(){
-    int mes, anio, pagada;
-    float importe;
-
-    Socio::listar();
-    cout << "ID Socio: ";
-    cin >> _idSocio;
-
-    cout << "Mes: ";
-    cin >> mes;
-    setMes(mes);
-
-    cout << "Anio: ";
-    cin >> anio;
-    setAnio(anio);
-
-    cout << "Fecha de cobro:" << endl;
-    _fechaCobro.cargar();
-
-    cout << "Importe: ";
-    cin >> importe;
-    setImporte(importe);
-
-    cout << "Pagada? 1-Si / 0-No: ";
-    cin >> pagada;
-    _pagada = pagada;
-
-    _estado = true;
-}
-
-void Cuotas::mostrar(){
+void Cuotas::mostrar(int fila){
     if(_estado){
-        cout << "ID Cuota: " << _idCuota << endl;
-        cout << "ID Socio: " << _idSocio << endl;
-        cout << "Mes: " << _mes << endl;
-        cout << "Anio: " << _anio << endl;
-        cout << "Fecha de cobro: ";
-        _fechaCobro.mostrar();
-        cout << endl;
-        cout << "Importe: " << _importe << endl;
-        cout << "Pagada: " << (_pagada ? "Si" : "No") << endl;
-        cout << "-----------------------------" << endl;
+        locate(30, fila + 1); cout << "ID Cuota: " << _idCuota;
+        locate(30, fila + 2); cout << "ID Socio: " << _idSocio;
+        locate(30, fila + 3); cout << "Mes: " << _mes;
+        locate(30, fila + 4); cout << "Anio: " << _anio;
+        locate(30, fila + 5); cout << "Fecha de cobro: " << _fechaCobro.getDia() << "/" << _fechaCobro.getMes() << "/" << _fechaCobro.getAnio();
+        locate(30, fila + 6); cout << "Importe: " << _importe;
+        locate(30, fila + 7); cout << "Pagada: " << (_pagada ? "Si" : "No");
+        locate(30, fila + 8); cout << "-----------------------------------";
     }
 }
 
@@ -181,78 +152,122 @@ int Cuotas::generarNuevoID(){
 }
 
 void Cuotas::listar(){
-    system("cls");
-
     int cantidad = contarRegistros();
 
+    int coincidencias = 0;
+    for(int i = 0; i < cantidad; i++)
+        if(leer(i).getEstado()) coincidencias++;
+
+    int alto = 10 + coincidencias * 9 + 1;
+    pantalla("LISTAR CUOTAS", alto);
+
+    int j = 0;
     for(int i = 0; i < cantidad; i++){
         Cuotas cuota = leer(i);
-        cuota.mostrar();
+        if(cuota.getEstado()){
+            cuota.mostrar(10 + j * 9);
+            j++;
+        }
     }
 
-    system("pause");
+    pausar(alto + 2);
+}
+
+
+void Cuotas::listarPagadas(){
+    int cantidad = contarRegistros();
+
+    int coincidencias = 0;
+    for(int i = 0; i < cantidad; i++){
+        Cuotas cuota = leer(i);
+        if(cuota.getEstado() && cuota.getPagada()) coincidencias++;
+    }
+
+    if(coincidencias == 0){
+        pantalla("CUOTAS PAGADAS", 14);
+        locate(30, 12); cout << "No hay cuotas pagadas.";
+        pausar(16);
+        return;
+    }
+
+    int alto = 10 + coincidencias * 9 + 1;
+    pantalla("CUOTAS PAGADAS", alto);
+
+    int j = 0;
+    for(int i = 0; i < cantidad; i++){
+        Cuotas cuota = leer(i);
+        if(cuota.getEstado() && cuota.getPagada()){
+            cuota.mostrar(10 + j * 9);
+            j++;
+        }
+    }
+
+    pausar(alto + 2);
+}
+
+void Cuotas::listarPendientes(){
+    int cantidad = contarRegistros();
+
+    int coincidencias = 0;
+    for(int i = 0; i < cantidad; i++){
+        Cuotas cuota = leer(i);
+        if(cuota.getEstado() && !cuota.getPagada()) coincidencias++;
+    }
+
+    if(coincidencias == 0){
+        pantalla("CUOTAS PENDIENTES", 14);
+        locate(30, 12); cout << "No hay cuotas pendientes.";
+        pausar(16);
+        return;
+    }
+
+    int alto = 10 + coincidencias * 9 + 1;
+    pantalla("CUOTAS PENDIENTES", alto);
+
+    int j = 0;
+    for(int i = 0; i < cantidad; i++){
+        Cuotas cuota = leer(i);
+        if(cuota.getEstado() && !cuota.getPagada()){
+            cuota.mostrar(10 + j * 9);
+            j++;
+        }
+    }
+
+    pausar(alto + 2);
 }
 
 void Cuotas::listarPendientesPorSocio(){
     int idSocio;
-
-    cout << "Ingrese ID Socio: ";
+    pantalla("PENDIENTES POR SOCIO", 22);
+    locate(30, 12); cout << "Ingrese ID Socio: ";
     cin >> idSocio;
-
-    system("cls");
 
     int cantidad = contarRegistros();
 
+    int coincidencias = 0;
     for(int i = 0; i < cantidad; i++){
         Cuotas cuota = leer(i);
+        if(cuota.getEstado() && cuota.getIdSocio() == idSocio && !cuota.getPagada()) coincidencias++;
+    }
 
+    if(coincidencias == 0){
+        pantalla("PENDIENTES POR SOCIO", 14);
+        locate(30, 12); cout << "No hay cuotas pendientes para ese socio.";
+        pausar(16);
+        return;
+    }
+
+    int alto = 10 + coincidencias * 9 + 1;
+    pantalla("PENDIENTES POR SOCIO", alto);
+
+    int j = 0;
+    for(int i = 0; i < cantidad; i++){
+        Cuotas cuota = leer(i);
         if(cuota.getEstado() && cuota.getIdSocio() == idSocio && !cuota.getPagada()){
-            cuota.mostrar();
+            cuota.mostrar(10 + j * 9);
+            j++;
         }
     }
 
-    system("pause");
-}
-
-void Cuotas::menuCuotas(){
-    int opcion;
-
-    while(true){
-        system("cls");
-        cout << "MENU CUOTAS" << endl;
-        cout << "1- Cargar cuota" << endl;
-        cout << "2- Listar cuotas" << endl;
-        cout << "3- Cuotas pendientes por socio" << endl;
-        cout << "0- Volver" << endl;
-        cin >> opcion;
-
-        switch(opcion){
-        case 1:{
-            Cuotas cuota;
-            cuota.setIdCuota(generarNuevoID());
-            cuota.cargar();
-
-            if(cuota.guardar()){
-                cout << "Cuota guardada correctamente." << endl;
-            }
-            else{
-                cout << "Error al guardar cuota." << endl;
-            }
-
-            system("pause");
-            break;
-        }
-
-        case 2:
-            listar();
-            break;
-
-        case 3:
-            listarPendientesPorSocio();
-            break;
-
-        case 0:
-            return;
-        }
-    }
+    pausar(alto + 2);
 }

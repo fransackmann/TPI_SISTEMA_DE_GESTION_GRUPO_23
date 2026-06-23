@@ -20,8 +20,7 @@ public:
     bool getEstado();
     void setEstado(bool estado);
 
-    void cargar();
-    void mostrar();
+    void mostrar(int fila);
 
     bool guardar();
     static int contarRegistros();
@@ -29,5 +28,4 @@ public:
     static int generarNuevoID();
     static void listar();
     static void listarOrdenadoAlfabeticamente();
-    static void menuGeneros();
 };

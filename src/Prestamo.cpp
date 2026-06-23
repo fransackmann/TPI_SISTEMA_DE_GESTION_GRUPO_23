@@ -4,7 +4,9 @@
 #include "Prestamo.h"
 #include "Socio.h"
 #include "Libro.h"
-
+#include "Menus.h"
+#include "rlutil.h"
+using namespace rlutil;
 using namespace std;
 
 int fechaAEntero(Fecha fecha){
@@ -63,50 +65,24 @@ void Prestamo::setVencido(bool vencido){ _vencido = vencido; }
 bool Prestamo::getEstado(){ return _estado; }
 void Prestamo::setEstado(bool estado){ _estado = estado; }
 
-void Prestamo::cargar(){
-    Socio::listar();
-    cout << "ID Socio: ";
-    cin >> _idSocio;
-
-    Libro::listar();
-    cout << "ID Libro: ";
-    cin >> _idLibro;
-
-    cout << "Fecha de prestamo:" << endl;
-    _fechaPrestamo.cargar();
-
-    cout << "Fecha de vencimiento:" << endl;
-    _fechaVencimiento.cargar();
-
-    _fechaDevolucion = Fecha();
-    _devuelto = false;
-    _vencido = false;
-    _estado = true;
-}
-
-void Prestamo::mostrar(){
+void Prestamo::mostrar(int fila){
     if(_estado){
-        cout << "ID Prestamo: " << _idPrestamo << endl;
-        cout << "ID Socio: " << _idSocio << endl;
-        cout << "ID Libro: " << _idLibro << endl;
-
-        cout << "Fecha de prestamo: ";
-        _fechaPrestamo.mostrar();
-        cout << endl;
-
-        cout << "Fecha de vencimiento: ";
-        _fechaVencimiento.mostrar();
-        cout << endl;
-
-        if(_devuelto){
-            cout << "Fecha de devolucion: ";
-            _fechaDevolucion.mostrar();
-            cout << endl;
-        }
-
-        cout << "Devuelto: " << (_devuelto ? "Si" : "No") << endl;
-        cout << "Vencido: " << (_vencido ? "Si" : "No") << endl;
-        cout << "-----------------------------" << endl;
+        locate(30, fila + 1);
+        cout << "ID Prestamo: " << _idPrestamo;
+        locate(30, fila + 2);
+        cout << "ID Socio: " << _idSocio;
+        locate(30, fila + 3);
+        cout << "ID Libro: " << _idLibro;
+        locate(30, fila + 4);
+        cout << "Fecha de prestamo: " << _fechaPrestamo.getDia() << "/" << _fechaPrestamo.getMes() << "/" << _fechaPrestamo.getAnio();
+        locate(30, fila + 5);
+        cout << "Fecha de vencimiento: " << _fechaVencimiento.getDia() << "/" << _fechaVencimiento.getMes() << "/" << _fechaVencimiento.getAnio();
+        locate(30, fila + 6);
+        cout << "Devuelto: " << (_devuelto ? "Si" : "No");
+        locate(30, fila + 7);
+        cout << "Vencido: " << (_vencido ? "Si" : "No");
+        locate(30, fila + 8);
+        cout << "-----------------------------------";
     }
 }
 
@@ -178,171 +154,67 @@ int Prestamo::generarNuevoID(){
     return maximo + 1;
 }
 
-void Prestamo::registrarPrestamo(){
-    Prestamo prestamo;
-    int idSocio, idLibro;
-
-    Socio::listar();
-    cout << "ID Socio: ";
-    cin >> idSocio;
-
-    if(!Socio::existe(idSocio)){
-        cout << "No existe un socio activo con ese ID." << endl;
-        system("pause");
-        return;
-    }
-
-    Libro::listar();
-    cout << "ID Libro: ";
-    cin >> idLibro;
-
-    int posLibro = Libro::buscarPorID(idLibro);
-
-    if(posLibro < 0){
-        cout << "No existe un libro activo con ese ID." << endl;
-        system("pause");
-        return;
-    }
-
-    Libro libro = Libro::leer(posLibro);
-
-    if(libro.getStockDisponible() <= 0){
-        cout << "No hay stock disponible para prestar este libro." << endl;
-        system("pause");
-        return;
-    }
-
-    prestamo.setIdPrestamo(generarNuevoID());
-    prestamo.setIdSocio(idSocio);
-    prestamo.setIdLibro(idLibro);
-
-    Fecha fechaPrestamo;
-    Fecha fechaVencimiento;
-
-    cout << "Fecha de prestamo:" << endl;
-    fechaPrestamo.cargar();
-
-    cout << "Fecha de vencimiento:" << endl;
-    fechaVencimiento.cargar();
-
-    prestamo.setFechaPrestamo(fechaPrestamo);
-    prestamo.setFechaVencimiento(fechaVencimiento);
-    prestamo.setDevuelto(false);
-    prestamo.setVencido(false);
-    prestamo.setEstado(true);
-
-    libro.prestarEjemplar();
-
-    if(prestamo.guardar() && libro.modificar(posLibro)){
-        cout << "Prestamo registrado correctamente." << endl;
-    }
-    else{
-        cout << "No se pudo registrar el prestamo." << endl;
-    }
-
-    system("pause");
-}
-
-void Prestamo::devolverPrestamo(){
-    int idPrestamo;
-
-    cout << "Ingrese ID de prestamo a devolver: ";
-    cin >> idPrestamo;
-
-    int posPrestamo = buscarPorID(idPrestamo);
-
-    if(posPrestamo < 0){
-        cout << "No existe un prestamo activo con ese ID." << endl;
-        system("pause");
-        return;
-    }
-
-    Prestamo prestamo = leer(posPrestamo);
-
-    if(prestamo.getDevuelto()){
-        cout << "Ese prestamo ya fue devuelto." << endl;
-        system("pause");
-        return;
-    }
-
-    int posLibro = Libro::buscarPorID(prestamo.getIdLibro());
-
-    if(posLibro < 0){
-        cout << "No se encontro el libro asociado al prestamo." << endl;
-        system("pause");
-        return;
-    }
-
-    Libro libro = Libro::leer(posLibro);
-
-    Fecha fechaDevolucion;
-    cout << "Fecha de devolucion:" << endl;
-    fechaDevolucion.cargar();
-
-    prestamo.setFechaDevolucion(fechaDevolucion);
-    prestamo.setDevuelto(true);
-
-    libro.devolverEjemplar();
-
-    if(prestamo.modificar(posPrestamo) && libro.modificar(posLibro)){
-        cout << "Devolucion registrada correctamente." << endl;
-    }
-    else{
-        cout << "No se pudo registrar la devolucion." << endl;
-    }
-
-    system("pause");
-}
-
 void Prestamo::listar(){
-    system("cls");
-
     int cantidad = contarRegistros();
-
+    int alto = 10 + cantidad * 9 + 1;
+    pantalla("LISTAR PRESTAMOS", alto);
+    int j = 0;
     for(int i = 0; i < cantidad; i++){
         Prestamo prestamo = leer(i);
-        prestamo.mostrar();
+        if (prestamo.getEstado()){
+            prestamo.mostrar(10 + j * 9);
+            j++;
+        }
     }
 
-    system("pause");
+    pausar(alto + 2);
 }
 
 void Prestamo::listarActivos(){
-    system("cls");
-
     int cantidad = contarRegistros();
 
-    for(int i = 0; i < cantidad; i++){
-        Prestamo prestamo = leer(i);
-
-        if(prestamo.getEstado() && !prestamo.getDevuelto()){
-            prestamo.mostrar();
-        }
+    int cont = 0;
+    for(int i= 0; i< cantidad; i++){
+        Prestamo p = leer(i);
+        if(p.getEstado() && !p.getDevuelto()) cont++;
     }
 
-    system("pause");
+    int alto = 10 + cont * 9 + 1;
+    pantalla("LISTAR ACTIVOS", alto);
+    int j = 0;
+    for(int i= 0; i< cantidad; i++){
+        Prestamo p = leer(i);
+        if(p.getEstado() && !p.getDevuelto()){
+            p.mostrar(10 + j * 9);
+            j++;
+        }
+    }
+    pausar(alto + 2);
 }
 
-
 void Prestamo::listarVencidos(){
-    system("cls");
-
     int cantidad = contarRegistros();
 
-    for(int i = 0; i < cantidad; i++){
-        Prestamo prestamo = leer(i);
-
-        if(prestamo.getEstado() && prestamo.getVencido()){
-            prestamo.mostrar();
-        }
+    int cont = 0;
+    for(int i= 0; i< cantidad; i++){
+        Prestamo p = leer(i);
+        if(p.getEstado() && p.getVencido()) cont++;
     }
 
-    system("pause");
+    int alto = 10 + cont * 9 + 1;
+    pantalla("LISTAR VENCIDOS", alto);
+    int j = 0;
+    for(int i= 0; i< cantidad; i++){
+        Prestamo p = leer(i);
+        if(p.getEstado() && p.getVencido()){
+            p.mostrar(10 + j * 9);
+            j++;
+        }
+    }
+    pausar(alto + 2);
 }
 
 void Prestamo::listarOrdenadosPorFecha(){
-    system("cls");
-
     int cantidad = contarRegistros();
 
     if(cantidad == 0){
@@ -357,6 +229,8 @@ void Prestamo::listarOrdenadosPorFecha(){
         prestamos[i] = leer(i);
     }
 
+    int y = 0;
+
     for(int i = 0; i < cantidad - 1; i++){
         for(int j = 0; j < cantidad - 1 - i; j++){
             if(fechaAEntero(prestamos[j].getFechaPrestamo()) > fechaAEntero(prestamos[j + 1].getFechaPrestamo())){
@@ -366,54 +240,195 @@ void Prestamo::listarOrdenadosPorFecha(){
             }
         }
     }
+    int alto = 10 + cantidad * 9 + 1;
+    pantalla("LISTAR PRESTAMOS", alto);
+   for(int i = 0; i < cantidad; i++){
+        Prestamo prestamo = prestamos[i];
+        if (prestamo.getEstado()){
+            prestamo.mostrar(10 + y * 9);
+            y++;
+        }
 
-    for(int i = 0; i < cantidad; i++){
-        prestamos[i].mostrar();
-    }
-
+}
     delete[] prestamos;
-    system("pause");
+    pausar(alto + 2);
 }
 
 void Prestamo::listarPorRangoFechas(){
     Fecha desde, hasta;
-
-    cout << "Ingrese fecha desde:" << endl;
-    desde.cargar();
-
-    cout << "Ingrese fecha hasta:" << endl;
-    hasta.cargar();
+    pantalla("PRESTAMOS POR RANGO", 22);
+    locate(30, 11); cout << "Fecha desde:";
+    desde = pedirFecha(54, 11);
+    locate(30, 15); cout << "Fecha hasta:";
+    hasta = pedirFecha(54, 15);
 
     int desdeInt = fechaAEntero(desde);
     int hastaInt = fechaAEntero(hasta);
 
-    system("cls");
-
     int cantidad = contarRegistros();
 
+    int coincidencias = 0;
     for(int i = 0; i < cantidad; i++){
-        Prestamo prestamo = leer(i);
-        int fechaPrestamo = fechaAEntero(prestamo.getFechaPrestamo());
+        Prestamo p = leer(i);
+        int f = fechaAEntero(p.getFechaPrestamo());
+        if(p.getEstado() && f >= desdeInt && f <= hastaInt) coincidencias++;
+    }
 
-        if(prestamo.getEstado() && fechaPrestamo >= desdeInt && fechaPrestamo <= hastaInt){
-            prestamo.mostrar();
+    if(coincidencias == 0){
+        pantalla("PRESTAMOS POR RANGO", 14);
+        locate(30, 12); cout << "No hay prestamos en ese rango.";
+        pausar(16);
+        return;
+    }
+
+    int alto = 10 + coincidencias * 9 + 1;
+    pantalla("PRESTAMOS POR RANGO", alto);
+
+    int j = 0;
+    for(int i = 0; i < cantidad; i++){
+        Prestamo p = leer(i);
+        int f = fechaAEntero(p.getFechaPrestamo());
+        if(p.getEstado() && f >= desdeInt && f <= hastaInt){
+            p.mostrar(10 + j * 9);
+            j++;
         }
     }
 
-    system("pause");
+    pausar(alto + 2);
+}
+
+void Prestamo::consultarPorSocio(){
+    int idSocio;
+    pantalla("PRESTAMOS POR SOCIO", 22);
+    locate(30, 12); cout << "Ingrese ID Socio: ";
+    cin >> idSocio;
+
+    int cantidad = contarRegistros();
+
+    int coincidencias = 0;
+    for(int i = 0; i < cantidad; i++){
+        Prestamo p = leer(i);
+        if(p.getEstado() && p.getIdSocio() == idSocio) coincidencias++;
+    }
+
+    if(coincidencias == 0){
+        pantalla("PRESTAMOS POR SOCIO", 14);
+        locate(30, 12); cout << "No se encontraron prestamos para ese socio.";
+        pausar(16);
+        return;
+    }
+
+    int alto = 10 + coincidencias * 9 + 1;
+    pantalla("PRESTAMOS POR SOCIO", alto);
+
+    int j = 0;
+    for(int i = 0; i < cantidad; i++){
+        Prestamo p = leer(i);
+        if(p.getEstado() && p.getIdSocio() == idSocio){
+            p.mostrar(10 + j * 9);
+            j++;
+        }
+    }
+
+    pausar(alto + 2);
+}
+
+void Prestamo::consultarPorLibro(){
+    int idLibro;
+    pantalla("PRESTAMOS POR LIBRO", 22);
+    locate(30, 12); cout << "Ingrese ID Libro: ";
+    cin >> idLibro;
+
+    int cantidad = contarRegistros();
+
+    int coincidencias = 0;
+    for(int i = 0; i < cantidad; i++){
+        Prestamo p = leer(i);
+        if(p.getEstado() && p.getIdLibro() == idLibro) coincidencias++;
+    }
+
+    if(coincidencias == 0){
+        pantalla("PRESTAMOS POR LIBRO", 14);
+        locate(30, 12); cout << "No se encontraron prestamos para ese libro.";
+        pausar(16);
+        return;
+    }
+
+    int alto = 10 + coincidencias * 9 + 1;
+    pantalla("PRESTAMOS POR LIBRO", alto);
+
+    int j = 0;
+    for(int i = 0; i < cantidad; i++){
+        Prestamo p = leer(i);
+        if(p.getEstado() && p.getIdLibro() == idLibro){
+            p.mostrar(10 + j * 9);
+            j++;
+        }
+    }
+
+    pausar(alto + 2);
+}
+
+void Prestamo::consultarPorEstado(){
+    int opcion;
+    pantalla("PRESTAMOS POR ESTADO", 22);
+    locate(30, 11); cout << "Estado a consultar:";
+    locate(30, 12); cout << "1 - Activos";
+    locate(30, 13); cout << "2 - Devueltos";
+    locate(30, 14); cout << "3 - Vencidos";
+    locate(30, 16); cout << "Opcion: ";
+    cin >> opcion;
+
+    int cantidad = contarRegistros();
+
+    int coincidencias = 0;
+    for(int i = 0; i < cantidad; i++){
+        Prestamo p = leer(i);
+        if(p.getEstado()){
+            if((opcion == 1 && !p.getDevuelto()) ||
+               (opcion == 2 && p.getDevuelto()) ||
+               (opcion == 3 && p.getVencido())) coincidencias++;
+        }
+    }
+
+    if(coincidencias == 0){
+        pantalla("PRESTAMOS POR ESTADO", 14);
+        locate(30, 12); cout << "No se encontraron prestamos para ese estado.";
+        pausar(16);
+        return;
+    }
+
+    int alto = 10 + coincidencias * 9 + 1;
+    pantalla("PRESTAMOS POR ESTADO", alto);
+
+    int j = 0;
+    for(int i = 0; i < cantidad; i++){
+        Prestamo p = leer(i);
+        if(p.getEstado()){
+            bool coincide = (opcion == 1 && !p.getDevuelto()) ||
+                            (opcion == 2 && p.getDevuelto()) ||
+                            (opcion == 3 && p.getVencido());
+            if(coincide){
+                p.mostrar(10 + j * 9);
+                j++;
+            }
+        }
+    }
+
+    pausar(alto + 2);
 }
 
 void Prestamo::marcarPrestamoVencido(){
     int idPrestamo;
 
-    cout << "Ingrese ID de prestamo a marcar vencido: ";
+    locate(30, 11);cout << "Ingrese ID de prestamo a marcar vencido: ";
     cin >> idPrestamo;
 
     int pos = buscarPorID(idPrestamo);
 
     if(pos < 0){
-        cout << "No existe un prestamo activo con ese ID." << endl;
-        system("pause");
+        locate(30, 20); cout << "No existe un prestamo activo con ese ID." << endl;
+        pausar(24);
         return;
     }
 
@@ -421,68 +436,11 @@ void Prestamo::marcarPrestamoVencido(){
     prestamo.setVencido(true);
 
     if(prestamo.modificar(pos)){
-        cout << "Prestamo marcado como vencido." << endl;
+        locate(30, 20); cout << "Prestamo marcado como vencido." << endl;
     }
     else{
-        cout << "No se pudo modificar el prestamo." << endl;
+       locate(30, 20);  cout << "No se pudo modificar el prestamo." << endl;
     }
 
-    system("pause");
-}
-
-
-void Prestamo::menuPrestamos(){
-    int opcion;
-
-    while(true){
-        system("cls");
-        cout << "MENU PRESTAMOS" << endl;
-        cout << "1- Registrar prestamo" << endl;
-        cout << "2- Listar prestamos" << endl;
-        cout << "3- Listar prestamos activos" << endl;
-        cout << "4- Listar prestamos vencidos" << endl;
-        cout << "5- Listar prestamos ordenados por fecha" << endl;
-        cout << "6- Prestamos por rango de fechas" << endl;
-        cout << "7- Marcar prestamo vencido" << endl;
-        cout << "8- Devolver prestamo" << endl;
-        cout << "0- Volver" << endl;
-        cin >> opcion;
-
-        switch(opcion){
-        case 1:
-            registrarPrestamo();
-            break;
-
-        case 2:
-            listar();
-            break;
-
-        case 3:
-            listarActivos();
-            break;
-
-        case 4:
-            listarVencidos();
-            break;
-
-        case 5:
-            listarOrdenadosPorFecha();
-            break;
-
-        case 6:
-            listarPorRangoFechas();
-            break;
-
-        case 7:
-            marcarPrestamoVencido();
-            break;
-
-        case 8:
-            devolverPrestamo();
-            break;
-
-        case 0:
-            return;
-        }
-    }
+    pausar(24);
 }

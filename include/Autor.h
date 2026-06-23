@@ -3,6 +3,8 @@
 class Autor{
 
 private:
+
+    /// atributos privados
     int _idAutor;
     char _nombre[30];
     char _apellido[30];
@@ -10,9 +12,12 @@ private:
     bool _estado;
 
 public:
+
+    /// constructores
     Autor();
     Autor(int idAutor, const char* nombre, const char* apellido, const char* nacionalidad, bool estado);
 
+    /// metodos get y set
     int getAutorID();
     void setAutorID(int idAutor);
 
@@ -28,8 +33,8 @@ public:
     bool getEstado();
     void setEstado(bool estado);
 
-    void cargar();
-    void mostrar();
+    /// metodos
+    void mostrar(int fila);
 
     bool guardar();
     static int contarRegistros();
@@ -37,5 +42,4 @@ public:
     static int generarNuevoID();
     static void listar();
     static void listarOrdenadoPorApellido();
-    static void menuAutores();
 };

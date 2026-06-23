@@ -53,7 +53,7 @@ public:
     void devolverEjemplar();
 
     void cargar();
-    void mostrar();
+    void mostrar(int fila);
 
     bool guardar();
     bool modificar(int posicion);
@@ -69,5 +69,4 @@ public:
     static void consultarPorISBN();
     static void bajaLogica();
     static void modificarLibro();
-    static void menuLibros();
 };

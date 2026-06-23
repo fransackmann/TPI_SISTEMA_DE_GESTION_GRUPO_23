@@ -33,16 +33,14 @@ public:
     bool getEstado();
     void setEstado(bool estado);
 
-    void cargar();
-    void mostrar();
+    void mostrar(int fila);
 
     bool guardar();
     static int contarRegistros();
     static Pagos leer(int posicion);
     static int generarNuevoID();
-    static void registrarPago();
     static void listar();
+    static void listarOrdenadosPorSocio();
     static void listarPorSocio();
     static void pagosPorMes();
-    static void menuPagos();
 };

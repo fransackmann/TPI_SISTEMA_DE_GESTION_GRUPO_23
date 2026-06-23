@@ -2,4 +2,186 @@
 <CodeBlocks_layout_file>
 	<FileVersion major="1" minor="0" />
 	<ActiveTarget name="Debug" />
+	<File name="src\Menus.cpp" open="1" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="9227" topLine="66" />
+		</Cursor>
+		<Folding>
+			<Collapse line="21" />
+			<Collapse line="29" />
+			<Collapse line="60" />
+			<Collapse line="68" />
+			<Collapse line="76" />
+			<Collapse line="99" />
+			<Collapse line="111" />
+			<Collapse line="123" />
+			<Collapse line="135" />
+			<Collapse line="147" />
+			<Collapse line="159" />
+			<Collapse line="182" />
+			<Collapse line="213" />
+			<Collapse line="236" />
+			<Collapse line="284" />
+			<Collapse line="347" />
+			<Collapse line="391" />
+			<Collapse line="486" />
+			<Collapse line="542" />
+			<Collapse line="600" />
+			<Collapse line="648" />
+			<Collapse line="695" />
+			<Collapse line="758" />
+			<Collapse line="780" />
+			<Collapse line="802" />
+			<Collapse line="830" />
+			<Collapse line="862" />
+			<Collapse line="890" />
+			<Collapse line="912" />
+			<Collapse line="934" />
+			<Collapse line="958" />
+			<Collapse line="984" />
+			<Collapse line="1004" />
+			<Collapse line="1080" />
+			<Collapse line="1107" />
+			<Collapse line="1121" />
+			<Collapse line="1135" />
+			<Collapse line="1145" />
+			<Collapse line="1155" />
+			<Collapse line="1196" />
+			<Collapse line="1237" />
+		</Folding>
+	</File>
+	<File name="src\Genero.cpp" open="1" top="0" tabpos="10" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="797" topLine="10" />
+		</Cursor>
+		<Folding>
+			<Collapse line="15" />
+		</Folding>
+	</File>
+	<File name="src\Cuotas.cpp" open="1" top="0" tabpos="12" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1603" topLine="43" />
+		</Cursor>
+	</File>
+	<File name="src\Autor.cpp" open="1" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="2476" topLine="24" />
+		</Cursor>
+		<Folding>
+			<Collapse line="13" />
+			<Collapse line="24" />
+			<Collapse line="167" />
+			<Collapse line="196" />
+			<Collapse line="220" />
+		</Folding>
+	</File>
+	<File name="include\Fecha.h" open="1" top="0" tabpos="16" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="0" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="include\rlutil.h" open="0" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="3282" topLine="262" />
+		</Cursor>
+		<Folding>
+			<Collapse line="1" />
+			<Collapse line="46" />
+			<Collapse line="71" />
+			<Collapse line="87" />
+			<Collapse line="112" />
+		</Folding>
+	</File>
+	<File name="include\Cuotas.h" open="1" top="0" tabpos="14" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="816" topLine="8" />
+		</Cursor>
+	</File>
+	<File name="include\Autor.h" open="1" top="0" tabpos="9" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="765" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="src\Prestamo.cpp" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="6161" topLine="59" />
+		</Cursor>
+		<Folding>
+			<Collapse line="67" />
+			<Collapse line="88" />
+			<Collapse line="97" />
+			<Collapse line="107" />
+			<Collapse line="117" />
+			<Collapse line="129" />
+			<Collapse line="142" />
+			<Collapse line="156" />
+			<Collapse line="172" />
+			<Collapse line="194" />
+			<Collapse line="256" />
+			<Collapse line="299" />
+			<Collapse line="335" />
+			<Collapse line="371" />
+			<Collapse line="420" />
+		</Folding>
+	</File>
+	<File name="src\Pagos.cpp" open="1" top="0" tabpos="13" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1216" topLine="35" />
+		</Cursor>
+		<Folding>
+			<Collapse line="104" />
+			<Collapse line="127" />
+			<Collapse line="168" />
+			<Collapse line="202" />
+		</Folding>
+	</File>
+	<File name="include\Genero.h" open="1" top="0" tabpos="11" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="435" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="src\Libro.cpp" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="13023" topLine="313" />
+		</Cursor>
+		<Folding>
+			<Collapse line="236" />
+			<Collapse line="287" />
+		</Folding>
+	</File>
+	<File name="src\Socio.cpp" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="8445" topLine="216" />
+		</Cursor>
+	</File>
+	<File name="include\Menus.h" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="400" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="main.cpp" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1250" topLine="16" />
+		</Cursor>
+	</File>
+	<File name="include\Socio.h" open="1" top="1" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1077" topLine="12" />
+		</Cursor>
+	</File>
+	<File name="include\Libro.h" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1256" topLine="19" />
+		</Cursor>
+	</File>
+	<File name="include\Prestamo.h" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1106" topLine="13" />
+		</Cursor>
+	</File>
+	<File name="src\Fecha.cpp" open="1" top="0" tabpos="15" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="821" topLine="0" />
+		</Cursor>
+	</File>
 </CodeBlocks_layout_file>

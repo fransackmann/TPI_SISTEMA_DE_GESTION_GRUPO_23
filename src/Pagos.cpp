@@ -4,8 +4,11 @@
 #include "Pagos.h"
 #include "Socio.h"
 #include "Cuotas.h"
+#include "Menus.h"
+#include "rlutil.h"
 
 using namespace std;
+using namespace rlutil;
 
 Pagos::Pagos(){
     _idPago = 0;
@@ -43,34 +46,14 @@ void Pagos::setImporte(float importe){ _importe = importe; }
 bool Pagos::getEstado(){ return _estado; }
 void Pagos::setEstado(bool estado){ _estado = estado; }
 
-void Pagos::cargar(){
-    Socio::listar();
-    cout << "ID Socio: ";
-    cin >> _idSocio;
-
-    Cuotas::listar();
-    cout << "ID Cuota: ";
-    cin >> _idCuota;
-
-    cout << "Fecha de pago:" << endl;
-    _fechaPago.cargar();
-
-    cout << "Importe: ";
-    cin >> _importe;
-
-    _estado = true;
-}
-
-void Pagos::mostrar(){
+void Pagos::mostrar(int fila){
     if(_estado){
-        cout << "ID Pago: " << _idPago << endl;
-        cout << "ID Socio: " << _idSocio << endl;
-        cout << "ID Cuota: " << _idCuota << endl;
-        cout << "Fecha de pago: ";
-        _fechaPago.mostrar();
-        cout << endl;
-        cout << "Importe: " << _importe << endl;
-        cout << "-----------------------------" << endl;
+        locate(30, fila + 1); cout << "ID Pago: " << _idPago;
+        locate(30, fila + 2); cout << "ID Socio: " << _idSocio;
+        locate(30, fila + 3); cout << "ID Cuota: " << _idCuota;
+        locate(30, fila + 4); cout << "Fecha de pago: " << _fechaPago.getDia() << "/" << _fechaPago.getMes() << "/" << _fechaPago.getAnio();
+        locate(30, fila + 5); cout << "Importe: " << _importe;
+        locate(30, fila + 6); cout << "-----------------------------------";
     }
 }
 
@@ -119,175 +102,137 @@ int Pagos::generarNuevoID(){
     return maximo + 1;
 }
 
-void Pagos::registrarPago(){
-    int idSocio, idCuota;
-    float importe;
-    Fecha fechaPago;
-
-    Socio::listar();
-    cout << "ID Socio: ";
-    cin >> idSocio;
-
-    if(!Socio::existe(idSocio)){
-        cout << "No existe un socio activo con ese ID." << endl;
-        system("pause");
-        return;
-    }
-
-    Cuotas::listar();
-    cout << "ID Cuota: ";
-    cin >> idCuota;
-
-    int posCuota = Cuotas::buscarPorID(idCuota);
-
-    if(posCuota < 0){
-        cout << "No existe una cuota activa con ese ID." << endl;
-        system("pause");
-        return;
-    }
-
-    Cuotas cuota = Cuotas::leer(posCuota);
-
-    if(cuota.getPagada()){
-        cout << "Esa cuota ya esta pagada." << endl;
-        system("pause");
-        return;
-    }
-
-    if(cuota.getIdSocio() != idSocio){
-        cout << "La cuota no corresponde al socio seleccionado." << endl;
-        system("pause");
-        return;
-    }
-
-    cout << "Fecha de pago:" << endl;
-    fechaPago.cargar();
-
-    cout << "Importe: ";
-    cin >> importe;
-
-    Pagos pago;
-    pago.setIdPago(generarNuevoID());
-    pago.setIdSocio(idSocio);
-    pago.setIdCuota(idCuota);
-    pago.setFechaPago(fechaPago);
-    pago.setImporte(importe);
-    pago.setEstado(true);
-
-    cuota.marcarPagada();
-
-    if(pago.guardar() && cuota.modificar(posCuota)){
-        cout << "Pago registrado correctamente y cuota marcada como pagada." << endl;
-    }
-    else{
-        cout << "No se pudo registrar el pago." << endl;
-    }
-
-    system("pause");
-}
-
 void Pagos::listar(){
-    system("cls");
-
     int cantidad = contarRegistros();
 
+    int coincidencias = 0;
+    for(int i = 0; i < cantidad; i++)
+        if(leer(i).getEstado()) coincidencias++;
+
+    int alto = 10 + coincidencias * 7 + 1;
+    pantalla("LISTAR PAGOS", alto);
+
+    int j = 0;
     for(int i = 0; i < cantidad; i++){
         Pagos pago = leer(i);
-        pago.mostrar();
+        if(pago.getEstado()){
+            pago.mostrar(10 + j * 7);
+            j++;
+        }
     }
 
-    system("pause");
+    pausar(alto + 2);
+}
+
+
+void Pagos::listarOrdenadosPorSocio(){
+    int cantidad = contarRegistros();
+
+    if(cantidad == 0){
+        pantalla("PAGOS ORDENADOS POR SOCIO", 14);
+        locate(30, 12); cout << "No hay pagos cargados.";
+        pausar(16);
+        return;
+    }
+
+    Pagos* pagos = new Pagos[cantidad];
+
+    for(int i = 0; i < cantidad; i++){
+        pagos[i] = leer(i);
+    }
+
+    for(int i = 0; i < cantidad - 1; i++){
+        for(int j = 0; j < cantidad - 1 - i; j++){
+            if(pagos[j].getIdSocio() > pagos[j + 1].getIdSocio()){
+                Pagos aux = pagos[j];
+                pagos[j] = pagos[j + 1];
+                pagos[j + 1] = aux;
+            }
+        }
+    }
+
+    int alto = 10 + cantidad * 7 + 1;
+    pantalla("PAGOS ORDENADOS POR SOCIO", alto);
+
+    int j = 0;
+    for(int i = 0; i < cantidad; i++){
+        if(pagos[i].getEstado()){
+            pagos[i].mostrar(10 + j * 7);
+            j++;
+        }
+    }
+
+    delete[] pagos;
+    pausar(alto + 2);
 }
 
 void Pagos::listarPorSocio(){
     int idSocio;
-
-    cout << "Ingrese ID Socio: ";
+    pantalla("PAGOS POR SOCIO", 22);
+    locate(30, 12); cout << "Ingrese ID Socio: ";
     cin >> idSocio;
 
-    system("cls");
-
     int cantidad = contarRegistros();
-    float total = 0;
 
+    int coincidencias = 0;
     for(int i = 0; i < cantidad; i++){
         Pagos pago = leer(i);
+        if(pago.getEstado() && pago.getIdSocio() == idSocio) coincidencias++;
+    }
 
+    int alto = 10 + coincidencias * 7 + 3;
+    pantalla("PAGOS POR SOCIO", alto);
+
+    int j = 0;
+    float total = 0;
+    for(int i = 0; i < cantidad; i++){
+        Pagos pago = leer(i);
         if(pago.getEstado() && pago.getIdSocio() == idSocio){
-            pago.mostrar();
+            pago.mostrar(10 + j * 7);
             total += pago.getImporte();
+            j++;
         }
     }
 
-    cout << "Total pagado por el socio: " << total << endl;
-    system("pause");
+    locate(30, 10 + coincidencias * 7 + 1);
+    cout << "Total pagado por el socio: " << total;
+    pausar(alto + 2);
 }
 
 
 void Pagos::pagosPorMes(){
     int mes, anio;
-    int cantidadPagos = 0;
-    float total = 0;
-
-    cout << "Ingrese mes: ";
+    pantalla("PAGOS POR MES", 22);
+    locate(30, 12); cout << "Ingrese mes: ";
     cin >> mes;
-
-    cout << "Ingrese anio: ";
+    locate(30, 13); cout << "Ingrese anio: ";
     cin >> anio;
-
-    system("cls");
 
     int cantidad = contarRegistros();
 
+    int coincidencias = 0;
     for(int i = 0; i < cantidad; i++){
         Pagos pago = leer(i);
+        if(pago.getEstado() && pago.getFechaPago().getMes() == mes && pago.getFechaPago().getAnio() == anio) coincidencias++;
+    }
 
+    int alto = 10 + coincidencias * 7 + 4;
+    pantalla("PAGOS POR MES", alto);
+
+    int j = 0;
+    float total = 0;
+    for(int i = 0; i < cantidad; i++){
+        Pagos pago = leer(i);
         if(pago.getEstado() && pago.getFechaPago().getMes() == mes && pago.getFechaPago().getAnio() == anio){
-            pago.mostrar();
-            cantidadPagos++;
+            pago.mostrar(10 + j * 7);
             total += pago.getImporte();
+            j++;
         }
     }
 
-    cout << "Cantidad de pagos del mes: " << cantidadPagos << endl;
-    cout << "Total recaudado del mes: " << total << endl;
-
-    system("pause");
-}
-
-
-void Pagos::menuPagos(){
-    int opcion;
-
-    while(true){
-        system("cls");
-        cout << "MENU PAGOS" << endl;
-        cout << "1- Registrar pago" << endl;
-        cout << "2- Listar pagos" << endl;
-        cout << "3- Listar pagos por socio" << endl;
-        cout << "4- Pagos realizados por mes" << endl;
-        cout << "0- Volver" << endl;
-        cin >> opcion;
-
-        switch(opcion){
-        case 1:
-            registrarPago();
-            break;
-
-        case 2:
-            listar();
-            break;
-
-        case 3:
-            listarPorSocio();
-            break;
-
-        case 4:
-            pagosPorMes();
-            break;
-
-        case 0:
-            return;
-        }
-    }
+    locate(30, 10 + coincidencias * 7 + 1);
+    cout << "Cantidad de pagos del mes: " << j;
+    locate(30, 10 + coincidencias * 7 + 2);
+    cout << "Total recaudado del mes: " << total;
+    pausar(alto + 2);
 }

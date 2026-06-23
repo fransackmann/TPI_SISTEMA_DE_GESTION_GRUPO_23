@@ -3,7 +3,10 @@
 #include <cstdio>
 #include <cstdlib>
 #include "Socio.h"
+#include "Menus.h"
+#include "rlutil.h"
 
+using namespace rlutil;
 using namespace std;
 
 Socio::Socio(){
@@ -57,44 +60,19 @@ void Socio::setFechaNacimiento(Fecha fechaNacimiento){ _fechaNacimiento = fechaN
 bool Socio::getEstado(){ return _estado; }
 void Socio::setEstado(bool estado){ _estado = estado; }
 
-void Socio::cargar(){
-    cout << "Nombre: ";
-    cin >> _nombre;
 
-    cout << "Apellido: ";
-    cin >> _apellido;
-
-    cout << "DNI: ";
-    cin >> _dni;
-
-    cout << "Telefono: ";
-    cin >> _telefono;
-
-    cout << "Email: ";
-    cin >> _email;
-
-    cout << "Domicilio: ";
-    cin >> _domicilio;
-
-    cout << "Fecha de nacimiento:" << endl;
-    _fechaNacimiento.cargar();
-
-    _estado = true;
-}
-
-void Socio::mostrar(){
+void Socio::mostrar(int fila){
     if(_estado){
-        cout << "ID Socio: " << _idSocio << endl;
-        cout << "Nombre: " << _nombre << endl;
-        cout << "Apellido: " << _apellido << endl;
-        cout << "DNI: " << _dni << endl;
-        cout << "Telefono: " << _telefono << endl;
-        cout << "Email: " << _email << endl;
-        cout << "Domicilio: " << _domicilio << endl;
-        cout << "Fecha nacimiento: ";
-        _fechaNacimiento.mostrar();
-        cout << endl;
-        cout << "-----------------------------" << endl;
+        Fecha f = _fechaNacimiento;
+        locate(30, fila + 1);cout << "ID Socio: " << _idSocio << endl;
+        locate(30, fila + 2);cout << "Nombre: " << _nombre << endl;
+        locate(30, fila + 3);cout << "Apellido: " << _apellido << endl;
+        locate(30, fila + 4);cout << "DNI: " << _dni << endl;
+        locate(30, fila + 5);cout << "Telefono: " << _telefono << endl;
+        locate(30, fila + 6);cout << "Email: " << _email << endl;
+        locate(30, fila + 7);cout << "Domicilio: " << _domicilio << endl;
+        locate(30, fila + 8);cout << "Fecha nacimiento: " << f.getDia() << "/" << f.getMes() << "/" << f.getAnio() << endl;
+        locate(30, fila + 9);cout << "-----------------------------" << endl;
     }
 }
 
@@ -170,20 +148,6 @@ int Socio::generarNuevoID(){
     return maximo + 1;
 }
 
-void Socio::listar(){
-    system("cls");
-
-    int cantidad = contarRegistros();
-
-    for(int i = 0; i < cantidad; i++){
-        Socio socio = leer(i);
-        socio.mostrar();
-    }
-
-    system("pause");
-}
-
-
 void Socio::listarOrdenadoPorDNI(){
     system("cls");
 
@@ -211,45 +175,74 @@ void Socio::listarOrdenadoPorDNI(){
         }
     }
 
+    int activo = 0;
+
+    for (int i = 0; i < cantidad; i++){
+        if (socios[i].getEstado()) activo++;
+    }
+
+
+
+    int alto = 10 + activo * 11 + 1, y = 0;
+    pantalla("LISTAR SOCIOS", alto);
     for(int i = 0; i < cantidad; i++){
-        socios[i].mostrar();
+        Socio s = socios[i];
+        if (s.getEstado()){
+            Fecha f = s.getFechaNacimiento();
+            int fila = 10 + y * 11;
+            locate(30, fila + 1); cout << "ID: " << s.getIdSocio() << endl;
+            locate(30, fila + 2); cout << "Nombre: " << s.getNombre() << endl;
+            locate(30, fila + 3); cout << "Apellido: " << s.getApellido() << endl;
+            locate(30, fila + 4); cout << "DNI: " << s.getDNI() << endl;
+            locate(30, fila + 5); cout << "Domicilio: " << s.getDomicilio() << endl;
+            locate(30, fila + 6); cout << "Email: " << s.getEmail() << endl;
+            locate(30, fila + 7); cout << "Fecha de Nacimiento: " << f.getDia() << "/" << f.getMes() << "/" << f.getAnio() << endl;
+            locate(30, fila + 9); cout << "Telefono: " << s.getTelefono() << endl;
+            locate(30, fila + 10); cout << "-----------------------------------" << endl;
+            y++;
+        }
     }
 
     delete[] socios;
-    system("pause");
+    pausar(alto + 2);
 }
 
 void Socio::consultarPorDNI(){
     int dni;
-    bool encontro = false;
-
+    pantalla("BUSCAR SOCIOS", 22);
+    locate(30, 12);
     cout << "Ingrese DNI a buscar: ";
     cin >> dni;
 
-    system("cls");
-
     int cantidad = contarRegistros();
-
+    int pos = -1;
     for(int i = 0; i < cantidad; i++){
-        Socio socio = leer(i);
-
-        if(socio.getEstado() && socio.getDNI() == dni){
-            socio.mostrar();
-            encontro = true;
+        Socio s = leer(i);
+        if(s.getEstado() && s.getDNI() == dni){
+            pos = i;
+            break;
         }
     }
 
-    if(!encontro){
-        cout << "No se encontro socio con ese DNI." << endl;
+    if(pos < 0){
+        pantalla("RESULTADO DE BUSQUEDA", 14);
+        locate(30, 12); cout << "No se encontro socio con ese DNI.";
+        pausar(16);
+        return;
     }
 
-    system("pause");
+    Socio s = leer(pos);
+    pantalla("RESULTADO DE BUSQUEDA", 22);
+    s.mostrar(10);
+    pausar(24);
 }
 
 void Socio::consultarPorApellido(){
     char apellido[30];
     bool encontro = false;
 
+    pantalla("BUSCAR SOCIOS", 22);
+    locate(30, 12);
     cout << "Ingrese apellido a buscar: ";
     cin >> apellido;
 
@@ -257,34 +250,45 @@ void Socio::consultarPorApellido(){
 
     int cantidad = contarRegistros();
 
+    int cont = 0;
     for(int i = 0; i < cantidad; i++){
-        Socio socio = leer(i);
+        Socio s = leer(i);
+        if(s.getEstado() && strcmp(s.getApellido(), apellido) == 0) cont++;
+    }
 
-        if(socio.getEstado() && strcmp(socio.getApellido(), apellido) == 0){
-            socio.mostrar();
-            encontro = true;
+    if(cont == 0){
+        pantalla("BUSCAR SOCIOS", 14);
+        locate(30, 11); cout << "No se encontraron socios con ese apellido.";
+        pausar(16);
+        return;
+    }
+
+    int alto = 10 + cont * 10 + 1;
+    pantalla("SOCIOS POR APELLIDO", alto);
+
+    int j = 0;
+    for(int i = 0; i < cantidad; i++){
+        Socio s = leer(i);
+        if(s.getEstado() && strcmp(s.getApellido(), apellido) == 0){
+            s.mostrar(10 + j * 10);
+            j++;
         }
     }
 
-    if(!encontro){
-        cout << "No se encontraron socios con ese apellido." << endl;
-    }
-
-    system("pause");
+    pausar(alto + 2);
 }
 
-
 void Socio::bajaLogica(){
+    pantalla("BAJA LOGICA", 22);
     int id;
-
-    cout << "Ingrese ID de socio a dar de baja: ";
+    locate(30,11);cout << "Ingrese ID de socio a dar de baja: ";
     cin >> id;
 
     int pos = buscarPorID(id);
 
     if(pos < 0){
-        cout << "No existe un socio activo con ese ID." << endl;
-        system("pause");
+        locate(30, 14);cout << "No existe un socio activo con ese ID." << endl;
+        pausar(24);
         return;
     }
 
@@ -292,69 +296,11 @@ void Socio::bajaLogica(){
     socio.setEstado(false);
 
     if(socio.modificar(pos)){
-        cout << "Socio dado de baja correctamente." << endl;
+        locate(30, 14);cout << "Socio dado de baja correctamente." << endl;
     }
     else{
-        cout << "No se pudo dar de baja el socio." << endl;
+        locate(30, 14);cout << "No se pudo dar de baja el socio." << endl;
     }
 
-    system("pause");
-}
-
-void Socio::menuSocios(){
-    int opcion;
-
-    while(true){
-        system("cls");
-        cout << "MENU SOCIOS" << endl;
-        cout << "1- Cargar socio" << endl;
-        cout << "2- Listar socios" << endl;
-        cout << "3- Listar socios ordenados por DNI" << endl;
-        cout << "4- Consultar socio por DNI" << endl;
-        cout << "5- Consultar socio por apellido" << endl;
-        cout << "6- Baja logica de socio" << endl;
-        cout << "0- Volver" << endl;
-        cin >> opcion;
-
-        switch(opcion){
-        case 1:{
-            Socio socio;
-            socio.setIdSocio(generarNuevoID());
-            socio.cargar();
-
-            if(socio.guardar()){
-                cout << "Socio guardado correctamente." << endl;
-            }
-            else{
-                cout << "Error al guardar socio." << endl;
-            }
-
-            system("pause");
-            break;
-        }
-
-        case 2:
-            listar();
-            break;
-
-        case 3:
-            listarOrdenadoPorDNI();
-            break;
-
-        case 4:
-            consultarPorDNI();
-            break;
-
-        case 5:
-            consultarPorApellido();
-            break;
-
-        case 6:
-            bajaLogica();
-            break;
-
-        case 0:
-            return;
-        }
-    }
+    pausar(24);
 }

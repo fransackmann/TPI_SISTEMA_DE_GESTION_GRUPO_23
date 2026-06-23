@@ -22,8 +22,5 @@ public:
     void setAnio(int anio);
 
     void cargar();
-    void cargar(int dia ,int mes ,int anio);
     void mostrar();
-//sobrecarga
-    void operator=(Fecha aux);
 };

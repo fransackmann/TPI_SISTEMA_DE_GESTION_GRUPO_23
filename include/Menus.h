@@ -3,10 +3,9 @@
 #include "Fecha.h"
 
 void limpiar();
-void pausar();
+void pausar(int alto = 25);
 
-void marco();
-void pantalla(const char* titulo);
+void pantalla(const char* titulo, int alto = 22);
 
 void opcion(int fila,int numero,const char* texto);
 void volver(int fila);
@@ -18,11 +17,15 @@ void menuGeneros();
 void menuSocios();
 void menuLibros();
 void menuPrestamos();
+void menuPrestamosConsultas();
+void menuPrestamosListados();
 void menuCuotas();
 void menuPagos();
 void menuCuotasPagos();
 void menuReportes();
 void menuConfiguracion();
+void menuBackup();
+void menuRestaurarBackup();
 
 void realizarBackup();
 void restaurarBackup();

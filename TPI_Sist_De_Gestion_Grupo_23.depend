@@ -1,85 +1,408 @@
 # depslib dependency file v1.0
-1781645341 source:c:\users\user\desktop\tpi_sistema_de_gestion_grupo_23-main\main.cpp
+1782150070 source:c:\users\paco\documents\facultad\programacion ii\tpi\tpi_sist_de_gestion_grupo_23\main.cpp
 	<iostream>
+	<cstdio>
+	<cstring>
+	"rlutil.h"
 	"Autor.h"
+	"Genero.h"
+	"Socio.h"
+	"Libro.h"
+	"Prestamo.h"
+	"Cuotas.h"
+	"Pagos.h"
 	"Fecha.h"
-	"Genero.h"
+	"Menus.h"
 
-1781645341 c:\users\user\desktop\tpi_sistema_de_gestion_grupo_23-main\include\autor.h
+1782080228 c:\users\paco\documents\facultad\programacion ii\tpi\tpi_sist_de_gestion_grupo_23\include\autor.h
 
-1781645341 c:\users\user\desktop\tpi_sistema_de_gestion_grupo_23-main\include\fecha.h
+1782136833 c:\users\paco\documents\facultad\programacion ii\tpi\tpi_sist_de_gestion_grupo_23\include\genero.h
 
-1781645341 source:c:\users\user\desktop\tpi_sistema_de_gestion_grupo_23-main\src\autor.cpp
+1782177195 c:\users\paco\documents\facultad\programacion ii\tpi\tpi_sist_de_gestion_grupo_23\include\socio.h
+	"Fecha.h"
+
+1782080228 c:\users\paco\documents\facultad\programacion ii\tpi\tpi_sist_de_gestion_grupo_23\include\fecha.h
+
+1782080228 c:\users\paco\documents\facultad\programacion ii\tpi\tpi_sist_de_gestion_grupo_23\include\libro.h
+	"Fecha.h"
+
+1782159696 c:\users\paco\documents\facultad\programacion ii\tpi\tpi_sist_de_gestion_grupo_23\include\prestamo.h
+	"Fecha.h"
+
+1782164853 c:\users\paco\documents\facultad\programacion ii\tpi\tpi_sist_de_gestion_grupo_23\include\cuotas.h
+	"Fecha.h"
+
+1782164941 c:\users\paco\documents\facultad\programacion ii\tpi\tpi_sist_de_gestion_grupo_23\include\pagos.h
+	"Fecha.h"
+
+1782176645 source:c:\users\paco\documents\facultad\programacion ii\tpi\tpi_sist_de_gestion_grupo_23\src\autor.cpp
 	<iostream>
 	<cstring>
+	<cstdio>
+	<cstdlib>
 	"Autor.h"
 
-1781645341 source:c:\users\user\desktop\tpi_sistema_de_gestion_grupo_23-main\src\genero.cpp
+1782164924 source:c:\users\paco\documents\facultad\programacion ii\tpi\tpi_sist_de_gestion_grupo_23\src\cuotas.cpp
+	<iostream>
+	<cstdio>
+	<cstdlib>
+	"Cuotas.h"
+	"Socio.h"
+	"Menus.h"
+	"rlutil.h"
+
+1782164046 source:c:\users\paco\documents\facultad\programacion ii\tpi\tpi_sist_de_gestion_grupo_23\src\fecha.cpp
+	<iostream>
+	"Fecha.h"
+
+1782136830 source:c:\users\paco\documents\facultad\programacion ii\tpi\tpi_sist_de_gestion_grupo_23\src\genero.cpp
 	<iostream>
 	<cstring>
+	<cstdio>
+	<cstdlib>
 	"Genero.h"
 
-1781645341 c:\users\user\desktop\tpi_sistema_de_gestion_grupo_23-main\include\genero.h
-
-1781645341 source:c:\users\user\desktop\tpi_sistema_de_gestion_grupo_23-main\src\socio.cpp
+1782156619 source:c:\users\paco\documents\facultad\programacion ii\tpi\tpi_sist_de_gestion_grupo_23\src\libro.cpp
 	<iostream>
 	<cstring>
+	<cstdio>
+	<cstdlib>
+	"Libro.h"
+	"Autor.h"
+	"Genero.h"
+	"Menus.h"
+	"rlutil.h"
+
+1782165060 source:c:\users\paco\documents\facultad\programacion ii\tpi\tpi_sist_de_gestion_grupo_23\src\pagos.cpp
+	<iostream>
+	<cstdio>
+	<cstdlib>
+	"Pagos.h"
+	"Socio.h"
+	"Cuotas.h"
+	"Menus.h"
+	"rlutil.h"
+
+1782165737 source:c:\users\paco\documents\facultad\programacion ii\tpi\tpi_sist_de_gestion_grupo_23\src\prestamo.cpp
+	<iostream>
+	<cstdio>
+	<cstdlib>
+	"Prestamo.h"
+	"Socio.h"
+	"Libro.h"
+	"Menus.h"
+	"rlutil.h"
+
+1782080228 source:c:\users\paco\documents\facultad\programacion ii\tpi\tpi_sist_de_gestion_grupo_23\src\socio.cpp
+	<iostream>
+	<cstring>
+	<cstdio>
+	<cstdlib>
 	"Socio.h"
 
-1781645341 c:\users\user\desktop\tpi_sistema_de_gestion_grupo_23-main\include\socio.h
-	"Fecha.h"
-
-1781645341 source:c:\users\user\desktop\tpi_sistema_de_gestion_grupo_23-main\src\fecha.cpp
+1782080228 c:\users\paco\documents\facultad\programacion ii\tpi\tpi_sist_de_gestion_grupo_23\include\rlutil.h
 	<iostream>
-	"Fecha.h"
+	<string>
+	<cstdio>
+	<stdio.h>
+	<string.h>
+	<windows.h>
+	<conio.h>
+	<termios.h>
+	<unistd.h>
+	<sys/ioctl.h>
+	<sys/types.h>
+	<sys/time.h>
 
-1781375045 source:c:\users\user\desktop\dfsdf.cpp
-
-1781645341 source:c:\users\user\desktop\tpi_sistema_de_gestion_grupo_23-main\src\cuotas.cpp
+1782166073 source:c:\users\paco\documents\facultad\programacion ii\tpi\tpi_sist_de_gestion_grupo_23\src\menus.cpp
+	"Menus.h"
 	<iostream>
-	"Cuotas.h"
-
-1781645341 c:\users\user\desktop\tpi_sistema_de_gestion_grupo_23-main\include\cuotas.h
-	"Fecha.h"
-
-1781577835 source:c:\users\usuario\downloads\tpi_sistema_de_gestion_grupo_23-main\main.cpp
-	<iostream>
+	<cstdio>
+	<cstring>
+	"rlutil.h"
 	"Autor.h"
-	"Fecha.h"
 	"Genero.h"
-
-1781577709 c:\users\usuario\downloads\tpi_sistema_de_gestion_grupo_23-main\include\autor.h
-
-1781568611 c:\users\usuario\downloads\tpi_sistema_de_gestion_grupo_23-main\include\fecha.h
-
-1781568611 source:c:\users\usuario\downloads\tpi_sistema_de_gestion_grupo_23-main\src\cuotas.cpp
-	<iostream>
-	"Cuotas.h"
-
-1781568611 c:\users\usuario\downloads\tpi_sistema_de_gestion_grupo_23-main\include\cuotas.h
-	"Fecha.h"
-
-1781568611 source:c:\users\usuario\downloads\tpi_sistema_de_gestion_grupo_23-main\src\fecha.cpp
-	<iostream>
-	"Fecha.h"
-
-1781578583 source:c:\users\usuario\downloads\tpi_sistema_de_gestion_grupo_23-main\src\genero.cpp
-	<iostream>
-	<cstring>
-	"Genero.h"
-
-1781577720 c:\users\usuario\downloads\tpi_sistema_de_gestion_grupo_23-main\include\genero.h
-
-1781568611 source:c:\users\usuario\downloads\tpi_sistema_de_gestion_grupo_23-main\src\socio.cpp
-	<iostream>
-	<cstring>
 	"Socio.h"
-
-1781568611 c:\users\usuario\downloads\tpi_sistema_de_gestion_grupo_23-main\include\socio.h
+	"Libro.h"
+	"Prestamo.h"
+	"Cuotas.h"
+	"Pagos.h"
 	"Fecha.h"
 
-1781577201 source:c:\users\usuario\downloads\tpi_sistema_de_gestion_grupo_23-main\src\autor.cpp
+1782150074 c:\users\paco\documents\facultad\programacion ii\tpi\tpi_sist_de_gestion_grupo_23\include\menus.h
+	"Fecha.h"
+
+1782150070 source:c:\users\usuario\downloads\tpi_sist_de_gestion_grupo_23(1)\tpi_sist_de_gestion_grupo_23\main.cpp
+	<iostream>
+	<cstdio>
+	<cstring>
+	"rlutil.h"
+	"Autor.h"
+	"Genero.h"
+	"Socio.h"
+	"Libro.h"
+	"Prestamo.h"
+	"Cuotas.h"
+	"Pagos.h"
+	"Fecha.h"
+	"Menus.h"
+
+1782080228 c:\users\usuario\downloads\tpi_sist_de_gestion_grupo_23(1)\tpi_sist_de_gestion_grupo_23\include\rlutil.h
+	<iostream>
+	<string>
+	<cstdio>
+	<stdio.h>
+	<string.h>
+	<windows.h>
+	<conio.h>
+	<termios.h>
+	<unistd.h>
+	<sys/ioctl.h>
+	<sys/types.h>
+	<sys/time.h>
+
+1782080228 c:\users\usuario\downloads\tpi_sist_de_gestion_grupo_23(1)\tpi_sist_de_gestion_grupo_23\include\autor.h
+
+1782136833 c:\users\usuario\downloads\tpi_sist_de_gestion_grupo_23(1)\tpi_sist_de_gestion_grupo_23\include\genero.h
+
+1782080228 c:\users\usuario\downloads\tpi_sist_de_gestion_grupo_23(1)\tpi_sist_de_gestion_grupo_23\include\socio.h
+	"Fecha.h"
+
+1782080228 c:\users\usuario\downloads\tpi_sist_de_gestion_grupo_23(1)\tpi_sist_de_gestion_grupo_23\include\fecha.h
+
+1782080228 c:\users\usuario\downloads\tpi_sist_de_gestion_grupo_23(1)\tpi_sist_de_gestion_grupo_23\include\libro.h
+	"Fecha.h"
+
+1782159696 c:\users\usuario\downloads\tpi_sist_de_gestion_grupo_23(1)\tpi_sist_de_gestion_grupo_23\include\prestamo.h
+	"Fecha.h"
+
+1782164853 c:\users\usuario\downloads\tpi_sist_de_gestion_grupo_23(1)\tpi_sist_de_gestion_grupo_23\include\cuotas.h
+	"Fecha.h"
+
+1782164941 c:\users\usuario\downloads\tpi_sist_de_gestion_grupo_23(1)\tpi_sist_de_gestion_grupo_23\include\pagos.h
+	"Fecha.h"
+
+1782150074 c:\users\usuario\downloads\tpi_sist_de_gestion_grupo_23(1)\tpi_sist_de_gestion_grupo_23\include\menus.h
+	"Fecha.h"
+
+1782071148 source:c:\users\usuario\downloads\tpi_sist_de_gestion_grupo_23(1)\tpi_sist_de_gestion_grupo_23\src\autor.cpp
 	<iostream>
 	<cstring>
+	<cstdio>
+	<cstdlib>
 	"Autor.h"
+
+1782164924 source:c:\users\usuario\downloads\tpi_sist_de_gestion_grupo_23(1)\tpi_sist_de_gestion_grupo_23\src\cuotas.cpp
+	<iostream>
+	<cstdio>
+	<cstdlib>
+	"Cuotas.h"
+	"Socio.h"
+	"Menus.h"
+	"rlutil.h"
+
+1782164046 source:c:\users\usuario\downloads\tpi_sist_de_gestion_grupo_23(1)\tpi_sist_de_gestion_grupo_23\src\fecha.cpp
+	<iostream>
+	"Fecha.h"
+
+1782136830 source:c:\users\usuario\downloads\tpi_sist_de_gestion_grupo_23(1)\tpi_sist_de_gestion_grupo_23\src\genero.cpp
+	<iostream>
+	<cstring>
+	<cstdio>
+	<cstdlib>
+	"Genero.h"
+
+1782156619 source:c:\users\usuario\downloads\tpi_sist_de_gestion_grupo_23(1)\tpi_sist_de_gestion_grupo_23\src\libro.cpp
+	<iostream>
+	<cstring>
+	<cstdio>
+	<cstdlib>
+	"Libro.h"
+	"Autor.h"
+	"Genero.h"
+	"Menus.h"
+	"rlutil.h"
+
+1782166073 source:c:\users\usuario\downloads\tpi_sist_de_gestion_grupo_23(1)\tpi_sist_de_gestion_grupo_23\src\menus.cpp
+	"Menus.h"
+	<iostream>
+	<cstdio>
+	<cstring>
+	"rlutil.h"
+	"Autor.h"
+	"Genero.h"
+	"Socio.h"
+	"Libro.h"
+	"Prestamo.h"
+	"Cuotas.h"
+	"Pagos.h"
+	"Fecha.h"
+
+1782165060 source:c:\users\usuario\downloads\tpi_sist_de_gestion_grupo_23(1)\tpi_sist_de_gestion_grupo_23\src\pagos.cpp
+	<iostream>
+	<cstdio>
+	<cstdlib>
+	"Pagos.h"
+	"Socio.h"
+	"Cuotas.h"
+	"Menus.h"
+	"rlutil.h"
+
+1782165737 source:c:\users\usuario\downloads\tpi_sist_de_gestion_grupo_23(1)\tpi_sist_de_gestion_grupo_23\src\prestamo.cpp
+	<iostream>
+	<cstdio>
+	<cstdlib>
+	"Prestamo.h"
+	"Socio.h"
+	"Libro.h"
+	"Menus.h"
+	"rlutil.h"
+
+1782162984 source:c:\users\usuario\downloads\tpi_sist_de_gestion_grupo_23(1)\tpi_sist_de_gestion_grupo_23\src\socio.cpp
+	<iostream>
+	<cstring>
+	<cstdio>
+	<cstdlib>
+	"Socio.h"
+	"Menus.h"
+	"rlutil.h"
+
+1782188166 source:c:\users\usuario\downloads\tpi_verificado_corregido\main.cpp
+	<iostream>
+	<cstdio>
+	<cstring>
+	"rlutil.h"
+	"Autor.h"
+	"Genero.h"
+	"Socio.h"
+	"Libro.h"
+	"Prestamo.h"
+	"Cuotas.h"
+	"Pagos.h"
+	"Fecha.h"
+	"Menus.h"
+
+1782188166 c:\users\usuario\downloads\tpi_verificado_corregido\include\rlutil.h
+	<iostream>
+	<string>
+	<cstdio>
+	<stdio.h>
+	<string.h>
+	<windows.h>
+	<conio.h>
+	<termios.h>
+	<unistd.h>
+	<sys/ioctl.h>
+	<sys/types.h>
+	<sys/time.h>
+
+1782221626 c:\users\usuario\downloads\tpi_verificado_corregido\include\autor.h
+
+1782221660 c:\users\usuario\downloads\tpi_verificado_corregido\include\genero.h
+
+1782221663 c:\users\usuario\downloads\tpi_verificado_corregido\include\socio.h
+	"Fecha.h"
+
+1782221742 c:\users\usuario\downloads\tpi_verificado_corregido\include\fecha.h
+
+1782221664 c:\users\usuario\downloads\tpi_verificado_corregido\include\libro.h
+	"Fecha.h"
+
+1782221703 c:\users\usuario\downloads\tpi_verificado_corregido\include\prestamo.h
+	"Fecha.h"
+
+1782222129 c:\users\usuario\downloads\tpi_verificado_corregido\include\cuotas.h
+	"Fecha.h"
+
+1782221710 c:\users\usuario\downloads\tpi_verificado_corregido\include\pagos.h
+	"Fecha.h"
+
+1782217816 c:\users\usuario\downloads\tpi_verificado_corregido\include\menus.h
+	"Fecha.h"
+
+1782220717 source:c:\users\usuario\downloads\tpi_verificado_corregido\src\autor.cpp
+	<iostream>
+	<cstring>
+	<cstdio>
+	<cstdlib>
+	"rlutil.h"
+	"Menus.h"
+	"Autor.h"
+
+1782222121 source:c:\users\usuario\downloads\tpi_verificado_corregido\src\cuotas.cpp
+	<iostream>
+	<cstdio>
+	<cstdlib>
+	"Cuotas.h"
+	"Socio.h"
+	"Menus.h"
+	"rlutil.h"
+
+1782221743 source:c:\users\usuario\downloads\tpi_verificado_corregido\src\fecha.cpp
+	<iostream>
+	"Fecha.h"
+
+1782220744 source:c:\users\usuario\downloads\tpi_verificado_corregido\src\genero.cpp
+	<iostream>
+	<cstring>
+	<cstdio>
+	<cstdlib>
+	"Genero.h"
+	"rlutil.h"
+	"Menus.h"
+
+1782217958 source:c:\users\usuario\downloads\tpi_verificado_corregido\src\menus.cpp
+	"Menus.h"
+	<iostream>
+	<cstdio>
+	<cstring>
+	"rlutil.h"
+	"Autor.h"
+	"Genero.h"
+	"Socio.h"
+	"Libro.h"
+	"Prestamo.h"
+	"Cuotas.h"
+	"Pagos.h"
+	"Fecha.h"
+
+1782220894 source:c:\users\usuario\downloads\tpi_verificado_corregido\src\pagos.cpp
+	<iostream>
+	<cstdio>
+	<cstdlib>
+	"Pagos.h"
+	"Socio.h"
+	"Cuotas.h"
+	"Menus.h"
+	"rlutil.h"
+
+1782221010 source:c:\users\usuario\downloads\tpi_verificado_corregido\src\prestamo.cpp
+	<iostream>
+	<cstdio>
+	<cstdlib>
+	"Prestamo.h"
+	"Socio.h"
+	"Libro.h"
+	"Menus.h"
+	"rlutil.h"
+
+1782218111 source:c:\users\usuario\downloads\tpi_verificado_corregido\src\libro.cpp
+	<iostream>
+	<cstring>
+	<cstdio>
+	<cstdlib>
+	"Libro.h"
+	"Autor.h"
+	"Genero.h"
+	"Menus.h"
+	"rlutil.h"
+
+1782222031 source:c:\users\usuario\downloads\tpi_verificado_corregido\src\socio.cpp
+	<iostream>
+	<cstring>
+	<cstdio>
+	<cstdlib>
+	"Socio.h"
+	"Menus.h"
+	"rlutil.h"
 

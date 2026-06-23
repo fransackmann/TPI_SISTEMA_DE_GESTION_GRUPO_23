@@ -15,63 +15,62 @@
 #include "Fecha.h"
 
 using namespace std;
+using namespace rlutil;
 
-void limpiar(){ rlutil::cls(); }
+void limpiar(){ cls(); }
 
-void pausar(){
-    rlutil::setColor(rlutil::YELLOW);
-    rlutil::locate(34,25);
+void pausar(int alto){
+    setColor(rlutil::YELLOW);
+    locate(34,alto);
     cout << "Presione una tecla para continuar...";
-    rlutil::setColor(rlutil::WHITE);
-    rlutil::anykey();
+    setColor(rlutil::WHITE);
+    anykey();
 }
 
-void marco(){
-    rlutil::setColor(rlutil::LIGHTCYAN);
+void pantalla(const char* titulo, int alto){
+    limpiar();
+    setColor(LIGHTCYAN);
 
     for(int x=20; x<=95; x++){
-        rlutil::locate(x,4); cout << "=";
-        rlutil::locate(x,22); cout << "=";
+        setColor(LIGHTCYAN);
+        locate(x,4); cout << "=";
+        locate(x,alto); cout << "=";
     }
 
-    for(int y=4; y<=22; y++){
-        rlutil::locate(20,y); cout << "|";
-        rlutil::locate(95,y); cout << "|";
+    for(int y=4; y<=alto; y++){
+        setColor(LIGHTCYAN);
+        locate(20,y); cout << "|";
+        locate(95,y); cout << "|";
     }
-
-    rlutil::setColor(rlutil::WHITE);
-}
-
-void pantalla(const char* titulo){
-    limpiar();
-    marco();
-
-    rlutil::setColor(rlutil::YELLOW);
-    rlutil::locate(39,5);
+    setColor(YELLOW);
+    locate(39,5);
     cout << "[ SISTEMA DE BIBLIOTECA ]";
 
-    rlutil::setColor(rlutil::LIGHTCYAN);
-    rlutil::locate(38,7);
+    setColor(LIGHTCYAN);
+    locate(38,7);
     cout << titulo;
 
-    rlutil::setColor(rlutil::WHITE);
-    rlutil::locate(30,9);
+    setColor(WHITE);
+    locate(30,9);
     cout << "===================================";
+
+
+    setColor(WHITE);
 }
 
 void opcion(int fila, int numero, const char* texto){
-    rlutil::setColor(rlutil::LIGHTGREEN);
-    rlutil::locate(34,fila);
+    setColor(LIGHTGREEN);
+    locate(34,fila);
     cout << numero << " - ";
-    rlutil::setColor(rlutil::WHITE);
+    setColor(WHITE);
     cout << texto;
 }
 
 void volver(int fila){
-    rlutil::setColor(rlutil::LIGHTRED);
-    rlutil::locate(34,fila);
+    setColor(LIGHTRED);
+    locate(34,fila);
     cout << "0 - ";
-    rlutil::setColor(rlutil::WHITE);
+    setColor(WHITE);
     cout << "Volver / Salir";
 }
 
@@ -79,15 +78,15 @@ Fecha pedirFecha(int x, int y){
     Fecha f;
     int d,m,a;
 
-    rlutil::locate(x,y);
+    locate(x,y);
     cout << "Dia: ";
     cin >> d;
 
-    rlutil::locate(x,y+1);
+    locate(x,y+1);
     cout << "Mes: ";
     cin >> m;
 
-    rlutil::locate(x,y+2);
+    locate(x,y+2);
     cout << "Anio: ";
     cin >> a;
 
@@ -244,27 +243,27 @@ void altaSocio(){
 
     s.setIdSocio(Socio::generarNuevoID());
 
-    rlutil::locate(32,11); cout << "ID Socio: " << s.getIdSocio();
+    locate(32,11); cout << "ID Socio: " << s.getIdSocio();
 
-    rlutil::locate(32,12); cout << "Nombre: ";
+    locate(32,12); cout << "Nombre: ";
     cin >> nombre;
 
-    rlutil::locate(32,13); cout << "Apellido: ";
+    locate(32,13); cout << "Apellido: ";
     cin >> apellido;
 
-    rlutil::locate(32,14); cout << "DNI: ";
+    locate(32,14); cout << "DNI: ";
     cin >> dni;
 
-    rlutil::locate(32,15); cout << "Telefono: ";
+    locate(32,15); cout << "Telefono: ";
     cin >> telefono;
 
-    rlutil::locate(32,16); cout << "Email: ";
+    locate(32,16); cout << "Email: ";
     cin >> email;
 
-    rlutil::locate(32,17); cout << "Domicilio: ";
+    locate(32,17); cout << "Domicilio: ";
     cin >> domicilio;
 
-    rlutil::locate(32,18); cout << "Fecha nacimiento:";
+    locate(32,18); cout << "Fecha nacimiento:";
     Fecha fn = pedirFecha(54,18);
 
     s.setNombre(nombre);
@@ -276,7 +275,7 @@ void altaSocio(){
     s.setFechaNacimiento(fn);
     s.setEstado(true);
 
-    rlutil::locate(32,21);
+    locate(32,21);
     if(s.guardar()) cout << "Socio guardado correctamente.";
     else cout << "Error al guardar socio.";
 
@@ -292,41 +291,41 @@ void altaLibro(){
 
     l.setIdLibro(Libro::generarNuevoID());
 
-    rlutil::locate(32,11); cout << "ID Libro: " << l.getIdLibro();
+    locate(32,11); cout << "ID Libro: " << l.getIdLibro();
 
-    rlutil::locate(32,12); cout << "ISBN: ";
+    locate(32,12); cout << "ISBN: ";
     cin >> isbn;
 
-    rlutil::locate(32,13); cout << "Titulo: ";
+    locate(32,13); cout << "Titulo: ";
     cin >> tituloLibro;
 
-    rlutil::locate(32,14); cout << "ID Autor: ";
+    locate(32,14); cout << "ID Autor: ";
     cin >> idAutor;
 
     if(buscarAutorPorID(idAutor) < 0){
-        rlutil::locate(32,20);
+        locate(32,20);
         cout << "No existe ese autor.";
         pausar();
         return;
     }
 
-    rlutil::locate(32,15); cout << "ID Genero: ";
+    locate(32,15); cout << "ID Genero: ";
     cin >> idGenero;
 
     if(buscarGeneroPorID(idGenero) < 0){
-        rlutil::locate(32,20);
+        locate(32,20);
         cout << "No existe ese genero.";
         pausar();
         return;
     }
 
-    rlutil::locate(32,16); cout << "Editorial: ";
+    locate(32,16); cout << "Editorial: ";
     cin >> editorial;
 
-    rlutil::locate(32,17); cout << "Fecha publicacion:";
+    locate(32,17); cout << "Fecha publicacion:";
     Fecha fp = pedirFecha(54,17);
 
-    rlutil::locate(32,20); cout << "Stock total: ";
+    locate(32,20); cout << "Stock total: ";
     cin >> stock;
 
     l.setIsbn(isbn);
@@ -339,7 +338,7 @@ void altaLibro(){
     l.setStockDisponible(stock);
     l.setEstado(true);
 
-    rlutil::locate(32,21);
+    locate(32,21);
     if(l.guardar()) cout << "Libro guardado correctamente.";
     else cout << "Error al guardar libro.";
 
@@ -347,47 +346,198 @@ void altaLibro(){
 }
 
 void listarAutores(){
-    pantalla("LISTAR AUTORES");
-    rlutil::locate(1,24);
+    int cantidad = Autor::contarRegistros();
+    int activos = 0;
 
-    for(int i=0; i<Autor::contarRegistros(); i++){
-        Autor::leer(i).mostrar();
+    for(int i=0; i<cantidad; i++){
+        Autor a = Autor::leer(i);
+        if(a.getEstado()){
+            activos++;
+        }
     }
 
-    pausar();
+    if(activos == 0){
+        pantalla("LISTA AUTORES", 14);
+        locate(30, 12);
+        cout << "No hay autores cargados.";
+        pausar(16);
+        return;
+    }
+
+    int alto = 10 + activos * 5 + 1;
+    pantalla("LISTA AUTORES", alto);
+
+    int j = 0;
+    for(int i=0; i<cantidad; i++){
+        Autor a = Autor::leer(i);
+
+        if(a.getEstado()){
+            locate(30, 10 + j *5);
+            cout << "ID: " << a.getAutorID() << endl;
+            locate(30, 11 + j *5);
+            cout << "Nombre: " << a.getNombre() << endl;
+            locate(30, 12 + j *5);
+            cout << "Apellido: " << a.getApellido() << endl;
+            locate(30, 13 + j *5);
+            cout << "Nacionalidad: " << a.getNacionalidad() << endl;
+            locate(30, 14 + j *5);
+            cout << "-----------------------------------" << endl;
+            j++;
+        }
+    }
+
+    pausar(alto + 2);
 }
 
 void listarGeneros(){
-    pantalla("LISTAR GENEROS");
-    rlutil::locate(1,24);
+    int cantidad = Genero::contarRegistros();
+    int activos = 0;
 
-    for(int i=0; i<Genero::contarRegistros(); i++){
-        Genero::leer(i).mostrar();
+    for(int i=0; i<cantidad; i++){
+        Genero g = Genero::leer(i);
+        if(g.getEstado()){
+            activos++;
+        }
     }
 
-    pausar();
+    if(activos == 0){
+        pantalla("LISTAR GENEROS", 14);
+        locate(30, 12);
+        cout << "No hay generos cargados.";
+        pausar(16);
+        return;
+    }
+
+    int alto = 10 + activos * 3 + 1;
+    pantalla("LISTAR GENEROS", alto);
+
+    int j = 0;
+    for(int i=0; i<cantidad; i++){
+        Genero g = Genero::leer(i);
+
+        if(g.getEstado()){
+            int fila = 10 + j * 3;
+            locate(30, fila + 1);
+            cout << "ID: " << g.getIdGenero() << endl;
+            locate(30, fila + 2);
+            cout << "Descripcion: " << g.getDescripcion() << endl;
+            locate(30, fila + 3);
+            cout << "-----------------------------------" << endl;
+            j++;
+        }
+    }
+
+    pausar(alto + 2);
 }
 
 void listarSocios(){
-    pantalla("LISTAR SOCIOS");
-    rlutil::locate(1,24);
+    int cantidad = Socio::contarRegistros();
+    int activos = 0;
 
-    for(int i=0; i<Socio::contarRegistros(); i++){
-        Socio::leer(i).mostrar();
+    for(int i=0; i<cantidad; i++){
+        Socio s = Socio::leer(i);
+        if(s.getEstado()){
+            activos++;
+        }
     }
 
-    pausar();
+    if(activos == 0){
+        pantalla("LISTAR SOCIOS", 14);
+        locate(30, 12);
+        cout << "No hay socios cargados.";
+        pausar(16);
+        return;
+    }
+
+    int alto = 10 + activos * 9 + 1;
+    pantalla("LISTAR SOCIOS", alto);
+
+    int j = 0;
+    for(int i=0; i<cantidad; i++){
+        Socio s = Socio::leer(i);
+
+        if(s.getEstado()){
+            Fecha f = s.getFechaNacimiento();
+            int fila = 10 + j * 9;
+            locate(30 , fila + 1);
+            cout << "ID: " << s.getIdSocio() << endl;
+            locate(30 , fila +  2);
+            cout << "Nombre: " << s.getNombre() << endl;
+            locate(30 , fila +  3);
+            cout << "Apellido: " << s.getApellido() << endl;
+            locate(30 , fila +  4);
+            cout << "DNI: " << s.getDNI() << endl;
+            locate(30 , fila +  5);
+            cout << "Telefono: " << s.getTelefono() << endl;
+            locate(30 , fila +  6);
+            cout << "Email: " << s.getEmail() << endl;
+            locate(30 , fila +  7);
+            cout << "Domicilio: " << s.getDomicilio() << endl;
+            locate(30 , fila +  8);
+            cout << "Fecha de Nacimiento: " << f.getDia() << "/" << f.getMes() << "/" << f.getAnio() << endl;
+            locate(30 , fila +  9);
+            cout << "-----------------------------------" << endl;
+            j++;
+        }
+    }
+
+    pausar(alto + 2);
 }
 
 void listarLibros(){
-    pantalla("LISTAR LIBROS");
-    rlutil::locate(1,24);
+    int cantidad = Libro::contarRegistros();
+    int activos = 0;
 
-    for(int i=0; i<Libro::contarRegistros(); i++){
-        Libro::leer(i).mostrar();
+    for(int i=0; i<cantidad; i++){
+        Libro l = Libro::leer(i);
+        if(l.getEstado()){
+            activos++;
+        }
     }
 
-    pausar();
+    if(activos == 0){
+        pantalla("LISTAR LIBROS", 14);
+        locate(30, 12);
+        cout << "No hay libros cargados.";
+        pausar(16);
+        return;
+    }
+
+    int alto = 10 + activos * 11 + 1;
+    pantalla("LISTAR LIBROS", alto);
+
+    int j = 0;
+    for(int i=0; i<cantidad; i++){
+        Libro l = Libro::leer(i);
+
+        if(l.getEstado()){
+            Fecha f = l.getAnioPublicacion();
+            int fila = 10 + j * 11;
+            locate(30 , fila + 1);
+            cout << "ID: " << l.getIdLibro() << endl;
+            locate(30 , fila +  2);
+            cout << "ISBN: " << l.getIsbn() << endl;
+            locate(30 , fila +  3);
+            cout << "Titulo: " << l.getTitulo() << endl;
+            locate(30 , fila +  4);
+            cout << "ID Autor: " << l.getIdAutor() << endl;
+            locate(30 , fila +  5);
+            cout << "ID Genero: " << l.getIdGenero() << endl;
+            locate(30 , fila +  6);
+            cout << "Editorial: " << l.getEditorial() << endl;
+            locate(30 , fila +  7);
+            cout << "Fecha de Publicacion: " << f.getDia() << "/" << f.getMes() << "/" << f.getAnio() << endl;
+            locate(30 , fila +  9);
+            cout << "Stock total: " << l.getStockTotal() << endl;
+            locate(30 , fila +  10);
+            cout << "Stock Disponible: " << l.getStockDisponible() << endl;
+            locate(30 , fila +  11);
+            cout << "-----------------------------------" << endl;
+            j++;
+        }
+    }
+
+    pausar(alto + 2);
 }
 
 void registrarPrestamoRetro(){
@@ -396,22 +546,22 @@ void registrarPrestamoRetro(){
     int idSocio, idLibro;
     Prestamo p;
 
-    rlutil::locate(32,12); cout << "ID Socio: ";
+    locate(32,12); cout << "ID Socio: ";
     cin >> idSocio;
 
     if(buscarSocioPorID(idSocio) < 0){
-        rlutil::locate(32,20); cout << "No existe ese socio.";
+        locate(32,20); cout << "No existe ese socio.";
         pausar();
         return;
     }
 
-    rlutil::locate(32,13); cout << "ID Libro: ";
+    locate(32,13); cout << "ID Libro: ";
     cin >> idLibro;
 
     int posLibro = Libro::buscarPorID(idLibro);
 
     if(posLibro < 0){
-        rlutil::locate(32,20); cout << "No existe ese libro.";
+        locate(32,20); cout << "No existe ese libro.";
         pausar();
         return;
     }
@@ -419,15 +569,15 @@ void registrarPrestamoRetro(){
     Libro libro = Libro::leer(posLibro);
 
     if(libro.getStockDisponible() <= 0){
-        rlutil::locate(32,20); cout << "No hay stock disponible.";
+        locate(32,20); cout << "No hay stock disponible.";
         pausar();
         return;
     }
 
-    rlutil::locate(32,15); cout << "Fecha prestamo:";
+    locate(32,15); cout << "Fecha prestamo:";
     Fecha fp = pedirFecha(54,15);
 
-    rlutil::locate(32,18); cout << "Fecha vencimiento:";
+    locate(32,18); cout << "Fecha vencimiento:";
     Fecha fv = pedirFecha(54,18);
 
     p.setIdPrestamo(Prestamo::generarNuevoID());
@@ -441,7 +591,7 @@ void registrarPrestamoRetro(){
 
     libro.prestarEjemplar();
 
-    rlutil::locate(32,21);
+    locate(32,21);
     if(p.guardar() && libro.modificar(posLibro)) cout << "Prestamo registrado correctamente.";
     else cout << "Error al registrar prestamo.";
 
@@ -453,13 +603,13 @@ void devolverPrestamoRetro(){
 
     int idPrestamo;
 
-    rlutil::locate(32,12); cout << "ID Prestamo: ";
+    locate(32,12); cout << "ID Prestamo: ";
     cin >> idPrestamo;
 
     int posPrestamo = buscarPrestamoPorID(idPrestamo);
 
     if(posPrestamo < 0){
-        rlutil::locate(32,20); cout << "No existe ese prestamo.";
+        locate(32,20); cout << "No existe ese prestamo.";
         pausar();
         return;
     }
@@ -467,7 +617,7 @@ void devolverPrestamoRetro(){
     Prestamo p = Prestamo::leer(posPrestamo);
 
     if(p.getDevuelto()){
-        rlutil::locate(32,20); cout << "Ese prestamo ya fue devuelto.";
+        locate(32,20); cout << "Ese prestamo ya fue devuelto.";
         pausar();
         return;
     }
@@ -475,21 +625,21 @@ void devolverPrestamoRetro(){
     int posLibro = Libro::buscarPorID(p.getIdLibro());
 
     if(posLibro < 0){
-        rlutil::locate(32,20); cout << "No se encontro el libro.";
+        locate(32,20); cout << "No se encontro el libro.";
         pausar();
         return;
     }
 
     Libro libro = Libro::leer(posLibro);
 
-    rlutil::locate(32,14); cout << "Fecha devolucion:";
+    locate(32,14); cout << "Fecha devolucion:";
     Fecha fd = pedirFecha(54,14);
 
     p.setFechaDevolucion(fd);
     p.setDevuelto(true);
     libro.devolverEjemplar();
 
-    rlutil::locate(32,20);
+    locate(32,20);
     if(p.modificar(posPrestamo) && libro.modificar(posLibro)) cout << "Devolucion registrada correctamente.";
     else cout << "Error al registrar devolucion.";
 
@@ -505,27 +655,27 @@ void altaCuota(){
 
     c.setIdCuota(Cuotas::generarNuevoID());
 
-    rlutil::locate(32,11); cout << "ID Cuota: " << c.getIdCuota();
+    locate(32,11); cout << "ID Cuota: " << c.getIdCuota();
 
-    rlutil::locate(32,12); cout << "ID Socio: ";
+    locate(32,12); cout << "ID Socio: ";
     cin >> idSocio;
 
     if(buscarSocioPorID(idSocio) < 0){
-        rlutil::locate(32,20); cout << "No existe ese socio.";
+        locate(32,20); cout << "No existe ese socio.";
         pausar();
         return;
     }
 
-    rlutil::locate(32,13); cout << "Mes: ";
+    locate(32,13); cout << "Mes: ";
     cin >> mes;
 
-    rlutil::locate(32,14); cout << "Anio: ";
+    locate(32,14); cout << "Anio: ";
     cin >> anio;
 
-    rlutil::locate(32,15); cout << "Fecha cobro:";
+    locate(32,15); cout << "Fecha cobro:";
     Fecha fc = pedirFecha(54,15);
 
-    rlutil::locate(32,18); cout << "Importe: ";
+    locate(32,18); cout << "Importe: ";
     cin >> importe;
 
     c.setIdSocio(idSocio);
@@ -536,7 +686,7 @@ void altaCuota(){
     c.setPagada(false);
     c.setEstado(true);
 
-    rlutil::locate(32,21);
+    locate(32,21);
     if(c.guardar()) cout << "Cuota guardada correctamente.";
     else cout << "Error al guardar cuota.";
 
@@ -549,22 +699,22 @@ void registrarPagoRetro(){
     int idSocio, idCuota;
     float importe;
 
-    rlutil::locate(32,12); cout << "ID Socio: ";
+    locate(32,12); cout << "ID Socio: ";
     cin >> idSocio;
 
     if(buscarSocioPorID(idSocio) < 0){
-        rlutil::locate(32,20); cout << "No existe ese socio.";
+        locate(32,20); cout << "No existe ese socio.";
         pausar();
         return;
     }
 
-    rlutil::locate(32,13); cout << "ID Cuota: ";
+    locate(32,13); cout << "ID Cuota: ";
     cin >> idCuota;
 
     int posCuota = buscarCuotaPorID(idCuota);
 
     if(posCuota < 0){
-        rlutil::locate(32,20); cout << "No existe esa cuota.";
+        locate(32,20); cout << "No existe esa cuota.";
         pausar();
         return;
     }
@@ -572,21 +722,21 @@ void registrarPagoRetro(){
     Cuotas cuota = Cuotas::leer(posCuota);
 
     if(cuota.getPagada()){
-        rlutil::locate(32,20); cout << "La cuota ya esta pagada.";
+        locate(32,20); cout << "La cuota ya esta pagada.";
         pausar();
         return;
     }
 
     if(cuota.getIdSocio() != idSocio){
-        rlutil::locate(32,20); cout << "La cuota no corresponde al socio.";
+        locate(32,20); cout << "La cuota no corresponde al socio.";
         pausar();
         return;
     }
 
-    rlutil::locate(32,15); cout << "Fecha pago:";
+    locate(32,15); cout << "Fecha pago:";
     Fecha fp = pedirFecha(54,15);
 
-    rlutil::locate(32,18); cout << "Importe: ";
+    locate(32,18); cout << "Importe: ";
     cin >> importe;
 
     Pagos pago;
@@ -599,7 +749,7 @@ void registrarPagoRetro(){
 
     cuota.marcarPagada();
 
-    rlutil::locate(32,21);
+    locate(32,21);
     if(pago.guardar() && cuota.modificar(posCuota)) cout << "Pago registrado correctamente.";
     else cout << "Error al registrar pago.";
 
@@ -615,7 +765,7 @@ void menuAutores(){
         opcion(14,3,"Ordenar por apellido");
         volver(17);
 
-        rlutil::locate(34,20); cout << "Seleccione una opcion: ";
+        locate(34,20); cout << "Seleccione una opcion: ";
         cin >> op;
 
         switch(op){
@@ -637,7 +787,7 @@ void menuGeneros(){
         opcion(14,3,"Ordenar alfabeticamente");
         volver(17);
 
-        rlutil::locate(34,20); cout << "Seleccione una opcion: ";
+        locate(34,20); cout << "Seleccione una opcion: ";
         cin >> op;
 
         switch(op){
@@ -662,7 +812,7 @@ void menuSocios(){
         opcion(16,6,"Baja logica");
         volver(19);
 
-        rlutil::locate(34,21); cout << "Seleccione una opcion: ";
+        locate(34,21); cout << "Seleccione una opcion: ";
         cin >> op;
 
         switch(op){
@@ -690,11 +840,9 @@ void menuLibros(){
         opcion(15,6,"Consultar por ISBN");
         opcion(16,7,"Modificar libro");
         opcion(17,8,"Baja logica");
-        opcion(18,9,"Autores");
-        opcion(19,10,"Generos");
-        volver(21);
+        volver(19);
 
-        rlutil::locate(34,24); cout << "Seleccione una opcion: ";
+        locate(34,24); cout << "Seleccione una opcion: ";
         cin >> op;
 
         switch(op){
@@ -706,8 +854,6 @@ void menuLibros(){
         case 6: Libro::consultarPorISBN(); break;
         case 7: Libro::modificarLibro(); break;
         case 8: Libro::bajaLogica(); break;
-        case 9: menuAutores(); break;
-        case 10: menuGeneros(); break;
         case 0: return;
         default: pausar(); break;
         }
@@ -718,26 +864,68 @@ void menuPrestamos(){
     int op;
     while(true){
         pantalla("MENU PRESTAMOS");
-        opcion(11,1,"Registrar prestamo");
-        opcion(12,2,"Listar prestamos");
-        opcion(13,3,"Prestamos activos");
-        opcion(14,4,"Prestamos vencidos");
-        opcion(15,5,"Ordenados por fecha");
-        opcion(16,6,"Por rango de fechas");
-        opcion(17,7,"Devolver prestamo");
-        volver(20);
+        opcion(10,1,"Registrar prestamo");
+        opcion(11,2,"Listar prestamos");
+        opcion(12,3,"Marcar Vencido");
+        opcion(13,4,"Devolver prestamo");
+        opcion(14,5,"Listados");
+        opcion(15,6,"Consultas");
+        volver(18);
 
-        rlutil::locate(34,23); cout << "Seleccione una opcion: ";
+        locate(34,24); cout << "Seleccione una opcion: ";
         cin >> op;
 
         switch(op){
         case 1: registrarPrestamoRetro(); break;
-        case 2: Prestamo::listar(); break;
-        case 3: Prestamo::listarActivos(); break;
-        case 4: Prestamo::listarVencidos(); break;
-        case 5: Prestamo::listarOrdenadosPorFecha(); break;
-        case 6: Prestamo::listarPorRangoFechas(); break;
-        case 7: devolverPrestamoRetro(); break;
+        case 2: pantalla("LISTAR PRESTAMOS"); Prestamo::listar(); break;
+        case 3: pantalla("MARCAR VENCIDO"); Prestamo::marcarPrestamoVencido(); break;
+        case 4: devolverPrestamoRetro(); break;
+        case 5: menuPrestamosListados(); break;
+        case 6: menuPrestamosConsultas(); break;
+        case 0: return;
+        default: pausar(); break;
+        }
+    }
+}
+
+void menuPrestamosListados(){
+    int op;
+    while(true){
+        pantalla("MENU CONSULTAS");
+        opcion(10,1,"Prestamos Activos");
+        opcion(11,2,"Prestamos Vencidos");
+        opcion(12,3,"Ordenados Por Fecha");
+        volver(15);
+
+        locate(34,24); cout << "Seleccione una opcion: ";
+        cin >> op;
+
+        switch(op){
+        case 1: pantalla("PRESTAMOS ACTIVOS"); Prestamo::listarActivos(); break;
+        case 2: pantalla("PRESTAMOS VENCIDOS"); Prestamo::listarVencidos(); break;
+        case 3: pantalla("PRESTAMOS POR FECHA"); Prestamo::listarOrdenadosPorFecha(); break;
+        case 0: return;
+        default: pausar(); break;
+        }
+    }
+}
+
+void menuPrestamosConsultas(){
+    int op;
+    while(true){
+        pantalla("MENU CONSULTAS");
+        opcion(10,1,"Consultar por socio");
+        opcion(11,2,"Consultar por libro");
+        opcion(12,3,"Consultar por estado");
+        volver(15);
+
+        locate(34,24); cout << "Seleccione una opcion: ";
+        cin >> op;
+
+        switch(op){
+        case 1: pantalla("PRESTAMOS POR SOCIO"); Prestamo::consultarPorSocio(); break;
+        case 2: pantalla("PRESTAMOS POR LIBRO"); Prestamo::consultarPorLibro(); break;
+        case 3: pantalla("PRESTAMOS POR ESTADO"); Prestamo::consultarPorEstado(); break;
         case 0: return;
         default: pausar(); break;
         }
@@ -748,18 +936,20 @@ void menuCuotas(){
     int op;
     while(true){
         pantalla("MENU CUOTAS");
-        opcion(12,1,"Cargar cuota");
-        opcion(13,2,"Listar cuotas");
-        opcion(14,3,"Pendientes por socio");
+        opcion(11,1,"Cargar cuota");
+        opcion(12,2,"Listar cuotas");
+        opcion(13,3,"Cuotas pagadas");
+        opcion(14,4,"Cuotas pendientes");
         volver(17);
 
-        rlutil::locate(34,20); cout << "Seleccione una opcion: ";
+        locate(34,21); cout << "Seleccione una opcion: ";
         cin >> op;
 
         switch(op){
         case 1: altaCuota(); break;
-        case 2: Cuotas::listar(); break;
-        case 3: Cuotas::listarPendientesPorSocio(); break;
+        case 2: pantalla("LISTAR CUOTAS"); Cuotas::listar(); break;
+        case 3: pantalla("CUOTAS PAGADAS"); Cuotas::listarPagadas(); break;
+        case 4: pantalla("CUOTAS PENDIENTES"); Cuotas::listarPendientes(); break;
         case 0: return;
         default: pausar(); break;
         }
@@ -770,20 +960,22 @@ void menuPagos(){
     int op;
     while(true){
         pantalla("MENU PAGOS");
-        opcion(12,1,"Registrar pago");
-        opcion(13,2,"Listar pagos");
-        opcion(14,3,"Pagos por socio");
-        opcion(15,4,"Pagos por mes");
+        opcion(11,1,"Registrar pago");
+        opcion(12,2,"Listar pagos");
+        opcion(13,3,"Pagos ordenados por socio");
+        opcion(14,4,"Pagos por socio");
+        opcion(15,5,"Pagos por mes");
         volver(18);
 
-        rlutil::locate(34,21); cout << "Seleccione una opcion: ";
+        locate(34,21); cout << "Seleccione una opcion: ";
         cin >> op;
 
         switch(op){
         case 1: registrarPagoRetro(); break;
-        case 2: Pagos::listar(); break;
-        case 3: Pagos::listarPorSocio(); break;
-        case 4: Pagos::pagosPorMes(); break;
+        case 2: pantalla("LISTAR PAGOS"); Pagos::listar(); break;
+        case 3: pantalla("PAGOS ORDENADOS POR SOCIO"); Pagos::listarOrdenadosPorSocio(); break;
+        case 4: pantalla("PAGOS POR SOCIO"); Pagos::listarPorSocio(); break;
+        case 5: pantalla("PAGOS POR MES"); Pagos::pagosPorMes(); break;
         case 0: return;
         default: pausar(); break;
         }
@@ -798,7 +990,7 @@ void menuCuotasPagos(){
         opcion(13,2,"Pagos");
         volver(16);
 
-        rlutil::locate(34,20); cout << "Seleccione una opcion: ";
+        locate(34,20); cout << "Seleccione una opcion: ";
         cin >> op;
 
         switch(op){
@@ -810,7 +1002,6 @@ void menuCuotasPagos(){
     }
 }
 
-
 void reporteLibrosMasPrestados(){
     pantalla("LIBROS MAS PRESTADOS");
 
@@ -818,7 +1009,7 @@ void reporteLibrosMasPrestados(){
     int cantidadPrestamos = Prestamo::contarRegistros();
 
     if(cantidadLibros == 0){
-        rlutil::locate(32,13);
+        locate(32,13);
         cout << "No hay libros cargados.";
         pausar();
         return;
@@ -859,27 +1050,32 @@ void reporteLibrosMasPrestados(){
         }
     }
 
-    limpiar();
-    rlutil::setColor(rlutil::LIGHTCYAN);
-    cout << "LIBROS MAS PRESTADOS" << endl;
-    cout << "====================" << endl << endl;
-    rlutil::setColor(rlutil::WHITE);
+    int activos = 0;
+    for(int i=0; i<cantidadLibros; i++)
+        if(Libro::buscarPorID(ids[i]) >= 0) activos++;
 
+    int alto = 10 + activos * 5 + 1;
+    pantalla("LIBROS MAS PRESTADOS", alto);
+
+    int j = 0;
     for(int i=0; i<cantidadLibros; i++){
         int posLibro = Libro::buscarPorID(ids[i]);
 
         if(posLibro >= 0){
             Libro libro = Libro::leer(posLibro);
-            libro.mostrar();
-            cout << "Cantidad de prestamos: " << cantidades[i] << endl;
-            cout << "-----------------------------" << endl;
+            int fila = 10 + j * 5;
+            locate(30, fila + 1); cout << "Puesto " << (j + 1) << " - ID: " << libro.getIdLibro();
+            locate(30, fila + 2); cout << "Titulo: " << libro.getTitulo();
+            locate(30, fila + 3); cout << "Cantidad de prestamos: " << cantidades[i];
+            locate(30, fila + 4); cout << "-----------------------------------";
+            j++;
         }
     }
 
     delete[] ids;
     delete[] cantidades;
 
-    system("pause");
+    pausar(alto + 2);
 }
 
 void menuReportes(){
@@ -892,32 +1088,52 @@ void menuReportes(){
         opcion(11,2,"Libros mas prestados");
         opcion(12,3,"Cuotas pendientes por socio");
         opcion(13,4,"Pagos realizados por mes");
-        opcion(14,5,"Prestamos activos");
-        opcion(15,6,"Prestamos vencidos");
-        opcion(16,7,"Prestamos ordenados por fecha");
-        volver(19);
+        volver(16);
 
-        rlutil::locate(34,22);
+        locate(34,24);
         cout << "Seleccione una opcion: ";
         cin >> op;
 
         switch(op){
-        case 1: Prestamo::listarPorRangoFechas(); break;
+        case 1: pantalla("PRESTAMOS POR RANGO"); Prestamo::listarPorRangoFechas(); break;
         case 2: reporteLibrosMasPrestados(); break;
-        case 3: Cuotas::listarPendientesPorSocio(); break;
-        case 4: Pagos::pagosPorMes(); break;
-        case 5: Prestamo::listarActivos(); break;
-        case 6: Prestamo::listarVencidos(); break;
-        case 7: Prestamo::listarOrdenadosPorFecha(); break;
+        case 3: pantalla("CUOTAS PENDIENTES POR SOCIO"); Cuotas::listarPendientesPorSocio(); break;
+        case 4: pantalla("PAGOS POR MES"); Pagos::pagosPorMes(); break;
         case 0: return;
         default: pausar(); break;
         }
     }
 }
 
-void realizarBackup(){
+void realizarBackupArchivo(const char* nombreDat, const char* nombreBak){
     pantalla("COPIA DE SEGURIDAD");
 
+    locate(32,13);
+    if(copiarArchivo(nombreDat, nombreBak)){
+        cout << "Backup realizado: " << nombreBak;
+    }
+    else{
+        cout << "No se pudo realizar backup de " << nombreDat;
+    }
+
+    pausar();
+}
+
+void restaurarBackupArchivo(const char* nombreBak, const char* nombreDat){
+    pantalla("RESTAURAR BACKUP");
+
+    locate(32,13);
+    if(copiarArchivo(nombreBak, nombreDat)){
+        cout << "Backup restaurado: " << nombreDat;
+    }
+    else{
+        cout << "No se pudo restaurar " << nombreBak;
+    }
+
+    pausar();
+}
+
+void realizarBackup(){
     copiarArchivo("Autores.dat", "Autores.bak");
     copiarArchivo("Generos.dat", "Generos.bak");
     copiarArchivo("Libros.dat", "Libros.bak");
@@ -925,15 +1141,9 @@ void realizarBackup(){
     copiarArchivo("Prestamos.dat", "Prestamos.bak");
     copiarArchivo("Cuotas.dat", "Cuotas.bak");
     copiarArchivo("Pagos.dat", "Pagos.bak");
-
-    rlutil::locate(32,14);
-    cout << "Backup realizado correctamente.";
-    pausar();
 }
 
 void restaurarBackup(){
-    pantalla("RESTAURAR BACKUP");
-
     copiarArchivo("Autores.bak", "Autores.dat");
     copiarArchivo("Generos.bak", "Generos.dat");
     copiarArchivo("Libros.bak", "Libros.dat");
@@ -941,26 +1151,107 @@ void restaurarBackup(){
     copiarArchivo("Prestamos.bak", "Prestamos.dat");
     copiarArchivo("Cuotas.bak", "Cuotas.dat");
     copiarArchivo("Pagos.bak", "Pagos.dat");
+}
 
-    rlutil::locate(32,14);
-    cout << "Backup restaurado correctamente.";
-    pausar();
+void menuBackup(){
+    int op;
+
+    while(true){
+        pantalla("REALIZAR COPIA DE SEGURIDAD");
+
+        opcion(10,1,"Libros");
+        opcion(11,2,"Socios");
+        opcion(12,3,"Autores");
+        opcion(13,4,"Generos");
+        opcion(14,5,"Prestamos");
+        opcion(15,6,"Cuotas");
+        opcion(16,7,"Pagos");
+        opcion(17,8,"Todos los archivos");
+        volver(20);
+
+        locate(34,23);
+        cout << "Seleccione una opcion: ";
+        cin >> op;
+
+        switch(op){
+        case 1: realizarBackupArchivo("Libros.dat", "Libros.bak"); break;
+        case 2: realizarBackupArchivo("Socios.dat", "Socios.bak"); break;
+        case 3: realizarBackupArchivo("Autores.dat", "Autores.bak"); break;
+        case 4: realizarBackupArchivo("Generos.dat", "Generos.bak"); break;
+        case 5: realizarBackupArchivo("Prestamos.dat", "Prestamos.bak"); break;
+        case 6: realizarBackupArchivo("Cuotas.dat", "Cuotas.bak"); break;
+        case 7: realizarBackupArchivo("Pagos.dat", "Pagos.bak"); break;
+        case 8:
+            pantalla("COPIA DE SEGURIDAD");
+            realizarBackup();
+            rlutil::locate(32,13);
+            cout << "Backup de todos los archivos realizado.";
+            pausar();
+            break;
+        case 0: return;
+        default: pausar(); break;
+        }
+    }
+}
+
+void menuRestaurarBackup(){
+    int op;
+
+    while(true){
+        pantalla("RESTAURAR COPIA DE SEGURIDAD");
+
+        opcion(10,1,"Libros");
+        opcion(11,2,"Socios");
+        opcion(12,3,"Autores");
+        opcion(13,4,"Generos");
+        opcion(14,5,"Prestamos");
+        opcion(15,6,"Cuotas");
+        opcion(16,7,"Pagos");
+        opcion(17,8,"Todos los archivos");
+        volver(20);
+
+        locate(34,23);
+        cout << "Seleccione una opcion: ";
+        cin >> op;
+
+        switch(op){
+        case 1: restaurarBackupArchivo("Libros.bak", "Libros.dat"); break;
+        case 2: restaurarBackupArchivo("Socios.bak", "Socios.dat"); break;
+        case 3: restaurarBackupArchivo("Autores.bak", "Autores.dat"); break;
+        case 4: restaurarBackupArchivo("Generos.bak", "Generos.dat"); break;
+        case 5: restaurarBackupArchivo("Prestamos.bak", "Prestamos.dat"); break;
+        case 6: restaurarBackupArchivo("Cuotas.bak", "Cuotas.dat"); break;
+        case 7: restaurarBackupArchivo("Pagos.bak", "Pagos.dat"); break;
+        case 8:
+            pantalla("RESTAURAR BACKUP");
+            restaurarBackup();
+            locate(32,13);
+            cout << "Backup de todos los archivos restaurado.";
+            pausar();
+            break;
+        case 0: return;
+        default: pausar(); break;
+        }
+    }
 }
 
 void menuConfiguracion(){
     int op;
+
     while(true){
         pantalla("CONFIGURACION");
-        opcion(12,1,"Realizar backup");
-        opcion(13,2,"Restaurar backup");
+
+        opcion(12,1,"Realizar copia de seguridad");
+        opcion(13,2,"Restaurar copia de seguridad");
         volver(16);
 
-        rlutil::locate(34,20); cout << "Seleccione una opcion: ";
+        locate(34,20);
+        cout << "Seleccione una opcion: ";
         cin >> op;
 
         switch(op){
-        case 1: realizarBackup(); break;
-        case 2: restaurarBackup(); break;
+        case 1: menuBackup(); break;
+        case 2: menuRestaurarBackup(); break;
         case 0: return;
         default: pausar(); break;
         }

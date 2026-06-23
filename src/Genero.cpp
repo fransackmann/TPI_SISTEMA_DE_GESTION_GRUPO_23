@@ -3,9 +3,10 @@
 #include <cstdio>
 #include <cstdlib>
 #include "Genero.h"
-
+#include "rlutil.h"
+#include "Menus.h"
 using namespace std;
-
+using namespace rlutil;
 Genero::Genero(){
     _idGenero = 0;
     strcpy(_descripcion, "");
@@ -27,18 +28,11 @@ void Genero::setDescripcion(const char* descripcion){ strcpy(_descripcion, descr
 bool Genero::getEstado(){ return _estado; }
 void Genero::setEstado(bool estado){ _estado = estado; }
 
-void Genero::cargar(){
-    cout << "Descripcion: ";
-    cin >> _descripcion;
-
-    _estado = true;
-}
-
-void Genero::mostrar(){
+void Genero::mostrar(int fila){
     if(_estado){
-        cout << "ID: " << _idGenero << endl;
-        cout << "Descripcion: " << _descripcion << endl;
-        cout << "-----------------------------" << endl;
+        locate(30, fila + 1);cout << "ID: " << _idGenero << endl;
+        locate(30, fila + 2);cout << "Descripcion: " << _descripcion << endl;
+        locate(30, fila + 3);cout << "-----------------------------" << endl;
     }
 }
 
@@ -102,7 +96,7 @@ void Genero::listar(){
 
     for(int i = 0; i < cantidad; i++){
         Genero genero = leer(i);
-        genero.mostrar();
+        genero.mostrar(3);
     }
 
     system("pause");
@@ -124,6 +118,7 @@ void Genero::listarOrdenadoAlfabeticamente(){
     for(int i = 0; i < cantidad; i++){
         generos[i] = leer(i);
     }
+    int y = 0;
 
     for(int i = 0; i < cantidad - 1; i++){
         for(int j = 0; j < cantidad - 1 - i; j++){
@@ -134,54 +129,13 @@ void Genero::listarOrdenadoAlfabeticamente(){
             }
         }
     }
-
+    int alto = 10 + cantidad * 3 + 1;
+    pantalla("LISTAR GENEROS", alto);
     for(int i = 0; i < cantidad; i++){
-        generos[i].mostrar();
+        generos[i].mostrar(10 + y * 3);
+        y++;
     }
 
     delete[] generos;
-    system("pause");
-}
-
-void Genero::menuGeneros(){
-    int opcion;
-
-    while(true){
-        system("cls");
-        cout << "MENU GENEROS" << endl;
-        cout << "1- Cargar genero" << endl;
-        cout << "2- Listar generos" << endl;
-        cout << "3- Listar generos ordenados alfabeticamente" << endl;
-        cout << "0- Volver" << endl;
-        cin >> opcion;
-
-        switch(opcion){
-        case 1:{
-            Genero genero;
-            genero.setIdGenero(generarNuevoID());
-            genero.cargar();
-
-            if(genero.guardar()){
-                cout << "Genero guardado correctamente." << endl;
-            }
-            else{
-                cout << "Error al guardar genero." << endl;
-            }
-
-            system("pause");
-            break;
-        }
-
-        case 2:
-            listar();
-            break;
-
-        case 3:
-            listarOrdenadoAlfabeticamente();
-            break;
-
-        case 0:
-            return;
-        }
-    }
+    pausar(alto + 2);
 }

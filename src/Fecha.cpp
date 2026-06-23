@@ -60,7 +60,6 @@ void Fecha::setAnio(int anio){
 void Fecha::cargar(){
 
     int dia, mes, anio;
-
     cout << "Dia: ";
     cin >> dia;
 
@@ -80,15 +79,4 @@ void Fecha::mostrar(){
 
     cout << _dia << "/" << _mes << "/" << _anio;
 
-}
-void Fecha::cargar(int dia ,int mes ,int anio){
-    _dia = dia;
-    _mes = mes;
-    _anio = anio;
-
-}
-void Fecha::operator=(Fecha aux){
-_dia = aux._dia;
-_mes = aux._mes;
-_anio = aux._anio;
 }

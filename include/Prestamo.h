@@ -45,8 +45,7 @@ public:
     bool getEstado();
     void setEstado(bool estado);
 
-    void cargar();
-    void mostrar();
+    void mostrar(int fila = 10);
 
     bool guardar();
     bool modificar(int posicion);
@@ -54,13 +53,13 @@ public:
     static Prestamo leer(int posicion);
     static int buscarPorID(int idPrestamo);
     static int generarNuevoID();
-    static void registrarPrestamo();
-    static void devolverPrestamo();
     static void listar();
     static void listarActivos();
     static void listarVencidos();
     static void listarOrdenadosPorFecha();
     static void listarPorRangoFechas();
+    static void consultarPorSocio();
+    static void consultarPorLibro();
+    static void consultarPorEstado();
     static void marcarPrestamoVencido();
-    static void menuPrestamos();
 };

@@ -5,9 +5,10 @@
 #include "Libro.h"
 #include "Autor.h"
 #include "Genero.h"
-
+#include "Menus.h"
+#include "rlutil.h"
 using namespace std;
-
+using namespace rlutil;
 Libro::Libro(){
     _idLibro = 0;
     strcpy(_isbn, "");
@@ -104,20 +105,19 @@ void Libro::cargar(){
     _estado = true;
 }
 
-void Libro::mostrar(){
+void Libro::mostrar(int fila){
     if(_estado){
-        cout << "ID Libro: " << _idLibro << endl;
-        cout << "ISBN: " << _isbn << endl;
-        cout << "Titulo: " << _titulo << endl;
-        cout << "ID Autor: " << _idAutor << endl;
-        cout << "ID Genero: " << _idGenero << endl;
-        cout << "Editorial: " << _editorial << endl;
-        cout << "Fecha / anio de publicacion: ";
-        _anioPublicacion.mostrar();
-        cout << endl;
-        cout << "Stock total: " << _stockTotal << endl;
-        cout << "Stock disponible: " << _stockDisponible << endl;
-        cout << "-----------------------------" << endl;
+        Fecha f = getAnioPublicacion();
+        locate(30 , fila + 1); cout << "ID: " << _idLibro << endl;
+        locate(30 , fila + 2); cout << "ISBN: " << _isbn << endl;
+        locate(30 , fila + 3); cout << "Titulo: " << _titulo << endl;
+        locate(30 , fila + 4); cout << "ID Autor: " << _idAutor << endl;
+        locate(30 , fila + 5); cout << "ID Genero: " << _idGenero << endl;
+        locate(30 , fila + 6); cout << "Editorial: " << _editorial << endl;
+        locate(30 , fila + 7); cout << "Fecha de Publicacion: " << f.getDia() << "/" << f.getMes() << "/" << f.getAnio() << endl;
+        locate(30 , fila + 8); cout << "Stock total: " << _stockTotal << endl;
+        locate(30 , fila + 9); cout << "Stock Disponible: " << _stockDisponible << endl;
+        locate(30 , fila + 10); cout << "-----------------------------------" << endl;
     }
 }
 
@@ -197,39 +197,98 @@ void Libro::listar(){
     system("cls");
 
     int cantidad = contarRegistros();
+    int activos = 0;
 
     for(int i = 0; i < cantidad; i++){
         Libro libro = leer(i);
-        libro.mostrar();
+        if(libro.getEstado()){
+            activos++;
+        }
     }
 
-    system("pause");
-}
-
-void Libro::listarPorAutor(){
-    int idAutor;
-
-    cout << "Ingrese ID Autor: ";
-    cin >> idAutor;
-
-    system("cls");
-
-    int cantidad = contarRegistros();
+    if(activos == 0){
+        cout << "No hay libros cargados." << endl;
+        system("pause");
+        return;
+    }
 
     for(int i = 0; i < cantidad; i++){
         Libro libro = leer(i);
 
-        if(libro.getEstado() && libro.getIdAutor() == idAutor){
-            libro.mostrar();
+        if(libro.getEstado()){
+            Fecha f = libro.getAnioPublicacion();
+
+            cout << "ID: " << libro.getIdLibro() << endl;
+            cout << "ISBN: " << libro.getIsbn() << endl;
+            cout << "Titulo: " << libro.getTitulo() << endl;
+            cout << "ID Autor: " << libro.getIdAutor() << endl;
+            cout << "ID Genero: " << libro.getIdGenero() << endl;
+            cout << "Editorial: " << libro.getEditorial() << endl;
+            cout << "Fecha de Publicacion: " << f.getDia() << "/" << f.getMes() << "/" << f.getAnio() << endl;
+            cout << "Stock total: " << libro.getStockTotal() << endl;
+            cout << "Stock Disponible: " << libro.getStockDisponible() << endl;
+            cout << "-----------------------------------" << endl;
         }
     }
 
     system("pause");
 }
 
+void Libro::listarPorAutor(){
+
+    int idAutor;
+    pantalla("BUSCAR LIBROS", 22);
+    locate(30, 12);
+    cout << "Ingrese ID Autor: ";
+    cin >> idAutor;
+    system("cls");
+
+    int cantidad = contarRegistros();
+
+    int suma=0;
+    for(int i = 0; i < cantidad; i++){
+        Libro libro = leer(i);
+        if(libro.getEstado() && libro.getIdAutor() == idAutor)suma++;
+        }
+    int j = 0;
+    int alto = 10 + suma * 11 + 1;
+    pantalla("LISTAR LIBROS", alto);
+    for(int i = 0; i < cantidad; i++){
+        Libro libro = leer(i);
+        if(libro.getEstado() && libro.getIdAutor() == idAutor){
+            Fecha f = libro.getAnioPublicacion();
+            int fila = 10 + j * 11;
+            locate(30, fila + 1);
+            cout << "ID: " << libro.getIdLibro() << endl;
+            locate(30, fila + 2);
+            cout << "ISBN: " << libro.getIsbn() << endl;
+            locate(30, fila + 3);
+            cout << "Titulo: " << libro.getTitulo() << endl;
+            locate(30, fila + 4);
+            cout << "ID Autor: " << libro.getIdAutor() << endl;
+            locate(30, fila + 5);
+            cout << "ID Genero: " << libro.getIdGenero() << endl;
+            locate(30, fila + 6);
+            cout << "Editorial: " << libro.getEditorial() << endl;
+            locate(30, fila + 7);
+            cout << "Fecha de Publicacion: " << f.getDia() << "/" << f.getMes() << "/" << f.getAnio() << endl;
+            locate(30, fila + 9);
+            cout << "Stock total: " << libro.getStockTotal() << endl;
+            locate(30, fila + 10);
+            cout << "Stock Disponible: " << libro.getStockDisponible() << endl;
+            locate(30, fila + 11);
+            cout << "-----------------------------------" << endl;
+            j++;
+        }
+    }
+
+    pausar(alto + 2);
+}
+
 void Libro::listarPorGenero(){
     int idGenero;
-
+    pantalla("BUSCAR LIBROS", 22);
+    locate(30, 12);
     cout << "Ingrese ID Genero: ";
     cin >> idGenero;
 
@@ -237,70 +296,110 @@ void Libro::listarPorGenero(){
 
     int cantidad = contarRegistros();
 
+int suma=0;
     for(int i = 0; i < cantidad; i++){
         Libro libro = leer(i);
-
+        if(libro.getEstado() && libro.getIdGenero() == idGenero)suma++;
+        }
+    int j = 0;
+    int alto = 10 + suma * 11 + 1;
+    pantalla("LISTAR LIBROS", alto);
+    for(int i = 0; i < cantidad; i++){
+        Libro libro = leer(i);
         if(libro.getEstado() && libro.getIdGenero() == idGenero){
-            libro.mostrar();
+            Fecha f = libro.getAnioPublicacion();
+            int fila = 10 + j * 11;
+            locate(30, fila + 1);
+            cout << "ID: " << libro.getIdLibro() << endl;
+            locate(30, fila + 2);
+            cout << "ISBN: " << libro.getIsbn() << endl;
+            locate(30, fila + 3);
+            cout << "Titulo: " << libro.getTitulo() << endl;
+            locate(30, fila + 4);
+            cout << "ID Autor: " << libro.getIdAutor() << endl;
+            locate(30, fila + 5);
+            cout << "ID Genero: " << libro.getIdGenero() << endl;
+            locate(30, fila + 6);
+            cout << "Editorial: " << libro.getEditorial() << endl;
+            locate(30, fila + 7);
+            cout << "Fecha de Publicacion: " << f.getDia() << "/" << f.getMes() << "/" << f.getAnio() << endl;
+            locate(30, fila + 9);
+            cout << "Stock total: " << libro.getStockTotal() << endl;
+            locate(30, fila + 10);
+            cout << "Stock Disponible: " << libro.getStockDisponible() << endl;
+            locate(30, fila + 11);
+            cout << "-----------------------------------" << endl;
+            j++;
         }
     }
 
-    system("pause");
+    pausar(alto + 2);
 }
 
 
 void Libro::consultarPorTitulo(){
     char titulo[50];
-    bool encontro = false;
-
-    cout << "Ingrese titulo a buscar: ";
+    pantalla("BUSCAR LIBROS", 22);
+    locate(30, 12); cout << "Ingrese titulo a buscar: ";
     cin >> titulo;
-
-    system("cls");
 
     int cantidad = contarRegistros();
 
+    int cont = 0;
     for(int i = 0; i < cantidad; i++){
-        Libro libro = leer(i);
+        Libro l = leer(i);
+        if(l.getEstado() && strcmp(l.getTitulo(), titulo) == 0) cont++;
+    }
 
-        if(libro.getEstado() && strcmp(libro.getTitulo(), titulo) == 0){
-            libro.mostrar();
-            encontro = true;
+    if(cont == 0){
+        pantalla("RESULTADO DE BUSQUEDA", 14);
+        locate(30, 12); cout << "No se encontro libro con ese titulo.";
+        pausar(16);
+        return;
+    }
+
+    int alto = 10 + cont * 11 + 1;
+    pantalla("RESULTADO DE BUSQUEDA", alto);
+
+    int j = 0;
+    for(int i = 0; i < cantidad; i++){
+        Libro l = leer(i);
+        if(l.getEstado() && strcmp(l.getTitulo(), titulo) == 0){
+            l.mostrar(10 + j * 11);
+            j++;
         }
     }
 
-    if(!encontro){
-        cout << "No se encontro libro con ese titulo." << endl;
-    }
-
-    system("pause");
+    pausar(alto + 2);
 }
 
 void Libro::consultarPorISBN(){
     char isbn[20];
-    bool encontro = false;
-
-    cout << "Ingrese ISBN a buscar: ";
+    pantalla("BUSCAR LIBROS", 22);
+    locate(30, 12); cout << "Ingrese ISBN a buscar: ";
     cin >> isbn;
 
-    system("cls");
-
     int cantidad = contarRegistros();
-
+    int pos = -1;
     for(int i = 0; i < cantidad; i++){
-        Libro libro = leer(i);
-
-        if(libro.getEstado() && strcmp(libro.getIsbn(), isbn) == 0){
-            libro.mostrar();
-            encontro = true;
+        Libro l = leer(i);
+        if(l.getEstado() && strcmp(l.getIsbn(), isbn) == 0){
+            pos = i;
+            break;
         }
     }
 
-    if(!encontro){
-        cout << "No se encontro libro con ese ISBN." << endl;
+    if(pos < 0){
+        pantalla("RESULTADO DE BUSQUEDA", 14);
+        locate(30, 12); cout << "No se encontro libro con ese ISBN.";
+        pausar(16);
+        return;
     }
 
-    system("pause");
+    Libro l = leer(pos);
+    pantalla("RESULTADO DE BUSQUEDA", 22);
+    l.mostrar(10);
+    pausar(24);
 }
 
 
@@ -359,82 +458,4 @@ void Libro::modificarLibro(){
     }
 
     system("pause");
-}
-
-void Libro::menuLibros(){
-    int opcion;
-
-    while(true){
-        system("cls");
-        cout << "MENU LIBROS" << endl;
-        cout << "1- Cargar libro" << endl;
-        cout << "2- Listar libros" << endl;
-        cout << "3- Listar libros por autor" << endl;
-        cout << "4- Listar libros por genero" << endl;
-        cout << "5- Consultar libro por titulo" << endl;
-        cout << "6- Consultar libro por ISBN" << endl;
-        cout << "7- Modificar libro" << endl;
-        cout << "8- Baja logica de libro" << endl;
-        cout << "9- Menu autores" << endl;
-        cout << "10- Menu generos" << endl;
-        cout << "0- Volver" << endl;
-        cin >> opcion;
-
-        switch(opcion){
-        case 1:{
-            Libro libro;
-            libro.setIdLibro(generarNuevoID());
-            libro.cargar();
-
-            if(libro.guardar()){
-                cout << "Libro guardado correctamente." << endl;
-            }
-            else{
-                cout << "Error al guardar libro." << endl;
-            }
-
-            system("pause");
-            break;
-        }
-
-        case 2:
-            listar();
-            break;
-
-        case 3:
-            listarPorAutor();
-            break;
-
-        case 4:
-            listarPorGenero();
-            break;
-
-        case 5:
-            consultarPorTitulo();
-            break;
-
-        case 6:
-            consultarPorISBN();
-            break;
-
-        case 7:
-            modificarLibro();
-            break;
-
-        case 8:
-            bajaLogica();
-            break;
-
-        case 9:
-            Autor::menuAutores();
-            break;
-
-        case 10:
-            Genero::menuGeneros();
-            break;
-
-        case 0:
-            return;
-        }
-    }
 }

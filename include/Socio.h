@@ -45,8 +45,7 @@ public:
     bool getEstado();
     void setEstado(bool estado);
 
-    void cargar();
-    void mostrar();
+    void mostrar(int fila);
 
     bool guardar();
     bool modificar(int posicion);
@@ -56,10 +55,8 @@ public:
     static int buscarPorID(int idSocio);
     static bool existe(int idSocio);
     static int generarNuevoID();
-    static void listar();
     static void listarOrdenadoPorDNI();
     static void consultarPorDNI();
     static void consultarPorApellido();
     static void bajaLogica();
-    static void menuSocios();
 };

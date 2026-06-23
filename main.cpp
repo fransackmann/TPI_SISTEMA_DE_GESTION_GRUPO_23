@@ -14,12 +14,17 @@
 #include "Menus.h"
 
 using namespace std;
+using namespace rlutil;
+
+
+
+
 
 int main(){
-    int op;
 
-    rlutil::saveDefaultColor();
-    rlutil::setConsoleTitle("Sistema de Gestion de Biblioteca");
+    int op;
+    saveDefaultColor();
+    setConsoleTitle("Sistema de Gestion de Biblioteca");
 
     while(true){
         pantalla("SISTEMA DE GESTION DE BIBLIOTECA");
