@@ -23,7 +23,7 @@ Los datos se persisten en archivos binarios propios (`.dat`), sin depender de un
 
 - **C++**
 - [rlutil.h](https://github.com/tapio/rlutil) para la interfaz de consola (menús, colores, posicionamiento de texto)
-- Proyecto de **Code::Blocks** (`TPI_Sist_De_Gestion_Grupo_23.cbp`)
+- Proyecto de **Code::Blocks** (`SistemaGestionBiblioteca.cbp`)
 - Persistencia mediante archivos binarios (`Socios.dat`, `Autores.dat`, `Generos.dat`, etc.)
 
 ## Estructura del proyecto
@@ -33,12 +33,12 @@ Los datos se persisten en archivos binarios propios (`.dat`), sin depender de un
 ├── include/                  # Headers de cada módulo (Libro, Socio, Prestamo, Cuotas, Pagos, Autor, Genero, Fecha, Menus)
 ├── src/                      # Implementación de cada módulo
 ├── *.dat / *.bak              # Archivos de datos persistidos por el sistema
-└── TPI_Sist_De_Gestion_Grupo_23.cbp   # Proyecto de Code::Blocks
+└── SistemaGestionBiblioteca.cbp   # Proyecto de Code::Blocks
 ```
 
 ## Cómo compilar y ejecutar
 
-1. Abrir `TPI_Sist_De_Gestion_Grupo_23.cbp` con [Code::Blocks](http://www.codeblocks.org/) (con un compilador GCC/MinGW configurado).
+1. Abrir `SistemaGestionBiblioteca.cbp` con [Code::Blocks](http://www.codeblocks.org/) (con un compilador GCC/MinGW configurado).
 2. Compilar el proyecto (`Build`).
 3. Ejecutar el binario generado en `bin/Debug/`.
 
