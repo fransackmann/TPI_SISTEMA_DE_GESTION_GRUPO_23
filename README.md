@@ -1,6 +1,8 @@
 # Sistema de Gestión de Biblioteca
 
-Sistema de gestión integral para una biblioteca, desarrollado en **C++** para consola. Trabajo práctico final integrador de la materia **Programación II** en la Universidad Tecnológica Nacional (UTN - FRGP), realizado en grupo (Grupo 23).
+Sistema de gestión integral para una biblioteca, desarrollado en **C++** para consola. Administra catálogo de libros, socios, préstamos, cuotas y reportes, con persistencia propia en archivos binarios, sin depender de una base de datos externa.
+
+Proyecto desarrollado en el marco de la Universidad Tecnológica Nacional (UTN - FRGP).
 
 ## Funcionalidades
 
@@ -47,6 +49,6 @@ g++ main.cpp src/*.cpp -Iinclude -o sistema_biblioteca
 ./sistema_biblioteca
 ```
 
-## Autores
+## Desarrollo
 
-Trabajo grupal (Grupo 23) — Programación II, UTN FRGP.
+Proyecto desarrollado en equipo. Ver [contribuidores](https://github.com/fransackmann/sistema-gestion-biblioteca-cpp/graphs/contributors).
