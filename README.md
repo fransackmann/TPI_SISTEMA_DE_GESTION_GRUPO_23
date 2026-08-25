@@ -1,5 +1,7 @@
 # Sistema de Gestión de Biblioteca
 
+*[English version below](#library-management-system)*
+
 Sistema de gestión integral para una biblioteca, desarrollado en **C++** para consola. Administra catálogo de libros, socios, préstamos, cuotas y reportes, con persistencia propia en archivos binarios, sin depender de una base de datos externa.
 
 Proyecto desarrollado en el marco de la Universidad Tecnológica Nacional (UTN - FRGP).
@@ -52,3 +54,60 @@ g++ main.cpp src/*.cpp -Iinclude -o sistema_biblioteca
 ## Desarrollo
 
 Proyecto desarrollado en equipo. Ver [contribuidores](https://github.com/fransackmann/sistema-gestion-biblioteca-cpp/graphs/contributors).
+
+---
+
+## Library Management System
+
+Comprehensive management system for a library, built in **C++** for the console. Handles the book catalog, members, loans, dues and reports, with its own persistence in binary files, with no external database dependency.
+
+Developed as part of the Universidad Tecnológica Nacional (UTN - FRGP).
+
+### Features
+
+The system is organized into modules accessible from a main menu:
+
+- **Books** — add, remove, update and browse the catalog.
+- **Members** — library member management.
+- **Loans** — registration and tracking of book loans.
+- **Dues and payments** — management of dues and payments per member.
+- **Authors** — author list management.
+- **Genres** — management of available literary genres.
+- **Reports** — generates reports on the library's status.
+- **Settings** — general system configuration.
+
+Data is persisted in the system's own binary files (`.dat`), with no external database dependency.
+
+### Technologies
+
+- **C++**
+- [rlutil.h](https://github.com/tapio/rlutil) for the console interface (menus, colors, text positioning)
+- **Code::Blocks** project (`SistemaGestionBiblioteca.cbp`)
+- Persistence via binary files (`Socios.dat`, `Autores.dat`, `Generos.dat`, etc.)
+
+### Project structure
+
+```
+├── main.cpp                  # Entry point and main menu
+├── include/                  # Headers for each module (Libro, Socio, Prestamo, Cuotas, Pagos, Autor, Genero, Fecha, Menus)
+├── src/                      # Implementation of each module
+├── *.dat / *.bak              # Data files persisted by the system
+└── SistemaGestionBiblioteca.cbp   # Code::Blocks project
+```
+
+### How to build and run
+
+1. Open `SistemaGestionBiblioteca.cbp` with [Code::Blocks](http://www.codeblocks.org/) (with a GCC/MinGW compiler configured).
+2. Build the project.
+3. Run the binary generated in `bin/Debug/`.
+
+You can also compile it manually with GCC:
+
+```bash
+g++ main.cpp src/*.cpp -Iinclude -o library_system
+./library_system
+```
+
+### Team
+
+Developed as a team project. See [contributors](https://github.com/fransackmann/sistema-gestion-biblioteca-cpp/graphs/contributors).
